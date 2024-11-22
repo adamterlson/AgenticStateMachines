@@ -16,7 +16,7 @@ He further elaborates that agentic AI systems are characterized by their autonom
 
 By this description, AI Agents are also a **Finite State Machine (FSM)**—a pattern/tool that has been foundational in engineering long-running workflows and predictable systems.
 
-## AI Agents = LLMs + State Machines (and that’s a great thing)
+## The Perfect Pair: LLMs and State Machines for Smarter, More Reliable AI Agents
 
 State machines are a powerful complement to the unpredictability of LLMs. They provide:
 

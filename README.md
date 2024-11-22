@@ -3,8 +3,6 @@
 
 Harnessing the timeless **Finite State Machine (FSM)** and **Actor Model** alongside Large Language Models (LLMs) provides a structured and reliable approach to developing **agentic cognitive architectures**. Patterns such as tool use, reflection, planning, supervision, and human-in-the-loop interaction can be implemented effectively using FSMs. Together, FSMs and LLMs enable the creation of applications that are **understandable**, **scalable**, **observable**, **modular**, and **resilient**.
 
----
-
 ## What is an AI Agent?
 
 An **AI agent** extends the concept of a simple LLM response by incorporating decision-making and context-awareness over time. While traditional generative AI systems respond to a single prompt and produce an immediate result, AI agents operate as part of a **workflow process**, taking actions based on prior context and results. 
@@ -17,8 +15,6 @@ He further elaborates that agentic AI systems are characterized by their autonom
 > "They can make decisions and act without the need for human intervention or a human in the loop. They are always online, listening, reacting and analyzing domain-specific data in real time, making decisions and acting on them."  
 
 By this description, AI Agents are also a **Finite State Machine (FSM)**—a pattern/tool that has been foundational in engineering long-running workflows and predictable systems.
-
----
 
 ## AI Agents Are State Machines, and That’s a Great Thing
 
@@ -47,8 +43,6 @@ State machines are a powerful complement to the unpredictability of LLMs. They p
 
 By combining FSMs with LLMs, developers can craft systems that balance the creativity and flexibility of generative AI with the robustness and reliability of FSMs.
 
----
-
 ## Why Not Use Frameworks Like LangChain, LangGraph, AutoGen, or CrewAI?
 
 While libraries and frameworks like LangChain can accelerate agent development, they introduce several trade-offs:
@@ -58,9 +52,11 @@ While libraries and frameworks like LangChain can accelerate agent development, 
 
 ### 2. **Tool Lock-In**
    - Frameworks often lock developers into specific APIs or patterns, making it harder to migrate or evolve the architecture over time.
+   - Frameworks require the use of a specific programming language (notably Python)
 
 ### 3. **Obscured Behavior**
    - Frameworks abstract away important details of execution, making it difficult to debug or analyze the system's behavior in edge cases.
+   - Learning how Agentic systems work behind the scenes can be made difficult by these abstractions
 
 ### 4. **Complexity Overhead**
    - Frameworks often introduce layers of complexity, requiring additional code to fit specific use cases or integrate with other parts of the system.
@@ -68,16 +64,13 @@ While libraries and frameworks like LangChain can accelerate agent development, 
 ### 5. **Limited Flexibility**
    - Customization can be challenging, as frameworks often prioritize general-purpose solutions over niche requirements.
 
----
-
-## Why State Machines Are a Superior Choice
-
 By leveraging **finite state machines**—a "bread and butter" tool in software engineering—developers can avoid the pitfalls of heavy frameworks and instead:
 
 - **Build with Consistency**: Use the same patterns and techniques across agentic and non-agentic components of the system.
 - **Improve Maintainability**: Rely on straightforward, proven approaches that reduce long-term maintenance costs.
-- **Empower AI Generation**: State machines are simple enough for AI agents themselves to understand, generate, and refine, enabling self-improving architectures.
+- **Empower AI Generation**: State machines are simple and ubiquitous enough for AI agents themselves to understand, generate, and refine, enabling self-improving architectures.
 - **Integrate Seamlessly**: Use FSMs to bridge agentic workflows with other system components, such as UI, backend services, and external APIs.
+- **Language Agnostic**: Finite State Machines can be built in every language—having an understanding of Agentic patterns using FSMs will enable Agentic systems in any system, regardless of language
 
 In short, FSMs provide a flexible, extensible, and robust foundation for developing agentic AI systems that scale with confidence.
 
@@ -98,5 +91,3 @@ This repository demonstrates common agentic patterns implemented with FSMs:
 ## Contributing
 
 Contributions are welcome! If you have ideas for new patterns, improvements, or discussions about state machines in agentic architectures, feel free to open an issue or submit a pull request.
-
----

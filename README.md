@@ -27,7 +27,7 @@ State machines are a powerful complement to the unpredictability of LLMs. They p
    - FSMs allow you to monitor the agent's current state and transitions in real time. This transparency is crucial for debugging and understanding complex workflows.
 
 ### 3. **Predictability**
-   - While LLMs introduce stochastic behavior, FSMs are deterministic. This predictability ensures that the system behaves consistently under predefined conditions.
+   - While LLMs introduce stochastic behavior, FSMs are deterministic. This predictability ensures that the overall system behaves consistently, even when the LLM does not.
 
 ### 4. **Error Handling**
    - FSMs excel at defining fallback states and error recovery paths, making them ideal for systems where failure modes need to be well-understood and manageable.

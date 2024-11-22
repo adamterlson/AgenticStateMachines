@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Client</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+        #agentSelect {
+            margin-bottom: 1rem;
+        }
+        #messages {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+        #input {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #input input {
+            flex: 1;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Socket.IO Client</h1>
+    <div id="agentSelect">
+        <label for="agents">Select Agent:</label>
+        <select id="agents">
+            <option value="">-- Select an Agent --</option>
+        </select>
+        <button id="invokeAgentButton">Invoke Agent</button>
+    </div>
+    <div id="messages"></div>
+    <div id="input">
+        <input type="text" id="messageInput" placeholder="Type your message here..." disabled />
+        <button id="sendButton" disabled>Send</button>
+    </div>
+
+    <script>
+        const socket = io();
+
+        const agentSelect = document.getElementById('agents');
+        const invokeAgentButton = document.getElementById('invokeAgentButton');
+        const messagesDiv = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        
+        let currentAgent = null;
+        
+        // Append a message to the messages div
+        function appendMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messagesDiv.appendChild(messageElement);
+        }
+        
+        // Load available agents from the server
+        socket.on('availableAgents', (agents) => {
+            // Clear existing options to prevent duplicates
+            agentSelect.innerHTML = '<option value="">-- Select an Agent --</option>';
+        
+            for (const agent in agents) {
+                const option = document.createElement('option');
+                option.value = agent;
+                option.textContent = agent.charAt(0).toUpperCase() + agent.slice(1);
+                agentSelect.appendChild(option);
+            }
+        });
+        
+        // Handle agent selection with button click
+        invokeAgentButton.addEventListener('click', () => {
+            currentAgent = agentSelect.value;
+            if (currentAgent) {
+                socket.emit('invokeAgent', currentAgent);
+                appendMessage(`Agent Invoked: ${currentAgent}`);
+                messageInput.disabled = false;
+                sendButton.disabled = false;
+            } else {
+                messageInput.disabled = true;
+                sendButton.disabled = true;
+                appendMessage('No agent selected.');
+            }
+        });
+        
+        // Handle incoming messages
+        socket.on('message', (data) => {
+            appendMessage(`Agent: ${data}`);
+        });
+        
+        // Emit user messages to the server
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message) {
+                appendMessage(`You: ${message}`);
+                socket.emit('message', message);
+                messageInput.value = ''; // Clear the input field
+            }
+        });
+        
+        // Optionally handle connection and disconnection events
+        socket.on('connect', () => {
+            appendMessage('Connected to the server.');
+        });
+        
+        socket.on('disconnect', () => {
+            appendMessage('Disconnected from the server.');
+        });
+        
+    </script>
+</body>
+</html>

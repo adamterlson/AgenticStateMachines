@@ -1,7 +1,7 @@
 
 # Agentic AI State Machine Patterns
 
-Harnessing the timeless **Finite State Machine (FSM)** and **Actor Model** alongside Large Language Models (LLMs) provides a structured and reliable approach to developing **agentic cognitive architectures**. Patterns such as tool use, reflection, planning, supervision, and human-in-the-loop interaction can be implemented effectively using FSMs. Together, FSMs and LLMs enable the creation of applications that are **understandable**, **scalable**, **observable**, **modular**, and **resilient**.
+Harnessing the timeless **Finite State Machine (FSM)** and **Actor Model** alongside Large Language Models (LLMs) provides a structured and reliable approach to developing agentic cognitive architectures. Patterns such as tool use, reflection, planning, supervision, and human-in-the-loop interaction can be implemented effectively using FSMs. Together, FSMs and LLMs enable the creation of applications that are understandable, scalable, observable, modular, and resilient.
 
 ## What is an AI Agent?
 
@@ -16,7 +16,7 @@ He further elaborates that agentic AI systems are characterized by their autonom
 
 By this description, AI Agents are also a **Finite State Machine (FSM)**—a pattern/tool that has been foundational in engineering long-running workflows and predictable systems.
 
-## AI Agents Are State Machines, and That’s a Great Thing
+## AI Agents = LLMs + State Machines (and that’s a great thing)
 
 State machines are a powerful complement to the unpredictability of LLMs. They provide:
 
@@ -43,9 +43,9 @@ State machines are a powerful complement to the unpredictability of LLMs. They p
 
 By combining FSMs with LLMs, developers can craft systems that balance the creativity and flexibility of generative AI with the robustness and reliability of FSMs.
 
-## Why Not Use Frameworks Like LangChain, LangGraph, AutoGen, or CrewAI?
+## Foundational/Ubiquitous Patterns + LLM Generation > API Abstraction
 
-While libraries and frameworks like LangChain can accelerate agent development, they introduce several trade-offs:
+While libraries and frameworks like LangChain, LangGraph, AutoGen, and CrewAI can accelerate Agent development, they introduce several challenges:
 
 ### 1. **Additional Cognitive Load**
    - Developers must learn the framework’s abstractions and APIs, which may not align with their mental models or existing workflows.

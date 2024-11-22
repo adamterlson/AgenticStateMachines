@@ -1,6 +1,6 @@
 import { assign, setup } from "xstate";
-import writerAgent from './writer'
-import criticAgent from './critic'
+import writerAgent from '../writer/writer'
+import criticAgent from '../critic/critic'
 
 /**
  * Multi-agent Thread

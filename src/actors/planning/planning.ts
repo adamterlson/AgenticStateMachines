@@ -1,5 +1,5 @@
 import { assign, createActor, fromPromise, setup, toPromise } from "xstate";
-import recipeThreadAgent from './thread'
+import recipeThreadAgent from '../thread/thread'
 
 import OpenAI from "openai";
 const openai = new OpenAI();

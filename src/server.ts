@@ -1,8 +1,8 @@
 import { createActor } from "xstate";
-import writerMachine from './actors/writer'
-import criticMachine from './actors/critic'
-import threadMachine from './actors/thread'
-import planningMachine from './actors/planning'
+import writerMachine from './actors/writer/writer'
+import criticMachine from './actors/critic/critic'
+import threadMachine from './actors/thread/thread'
+import planningMachine from './actors/planning/planning'
 
 // const actor = createActor(writerMachine, { input: { dish: "Tacos", additionalMessages: [{ role: 'user', content: 'Do not use cheese' }] } });
 //  const actor = createActor(threadMachine, { input: { dish: "Tacos" } });

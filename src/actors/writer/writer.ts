@@ -1,35 +1,3 @@
-/**
- * Agent Requirements
- * - Autonomous Decision-making
- * - Real-time Data Processing
- * - Action Execution (Creates Actors)
- * - Always Online Operation
- * - Domain-specific Intelligence
- * - Proactive Behavior
- * - Security and Compliance
- * 
- * Patterns:
- * - Collaboration
- * - Reflection
- * - Tool use
- * - Coding ability
- * - Human feedback
- * - Planning
- * 
- * 
- * TODO
- * Concrete (meal prep agent) over abstract, put the abstract notions as comments
- * Dynamic single agent behavior besides tool call
- * Orchestration between agents
- * Add socket connection, spawn machine on connect
- * Put human before tool
- * Fix tool passing semantics
- * Look at Lam's presentation slides for a "state chart" of an actor
- * Add max turns
- * Structured output LLM response (event shape?)
- * Update input to be goal oriented
- */
-
 import { assign, setup, fromPromise, emit } from 'xstate';
 
 import OpenAI from "openai";

@@ -1,4 +1,4 @@
-import { assign, setup, fromPromise, emit, createActor, createMachine, toPromise } from 'xstate';
+import { assign, setup, fromPromise, emit, createActor, createMachine, toPromise, sendTo, spawnChild } from 'xstate';
 import { createBrowserInspector } from '@statelyai/inspect';
 import OpenAI from "openai";
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
@@ -19,6 +19,10 @@ export const machine = setup({
     context: {}
   },
   actions: {
+    forward_event: sendTo(({ system }) => system.get('unsafe_machine'), ({ event }) => {
+      console.log('FORWARDING', event)
+      return event
+    }),
     add_unsafe_machine: assign({ unsafe_machine: ({ event }) => event.output.content }),
     add_user_message: assign({ messages: ({ event, context }) => [...context.messages, { role: 'user', content: event.payload }] }),
     add_assistant_message: assign({ messages: ({ event, context }) => [...context.messages, event.output] }),
@@ -34,6 +38,10 @@ export const machine = setup({
     emit_message: emit(({ context }) => ({
       type: 'INPUT_REQUEST',
       data: context.unsafe_machine,
+    })),
+    log: emit(({ context, event }) => ({
+      type: 'GOT INPUT',
+      data: event
     })),
   },
   actors: {
@@ -65,28 +73,18 @@ export const machine = setup({
   output: ({ context }) => reduce context to return expected output
 }`
           },
-          { role: 'user', content: 'Define a process for: self checkout at Best Buy' }
+          { role: 'user', content: 'You are a trip advisor agent prompt generator. Your job is to write awesome prompts. Define a process for collecting information from the user one step at a time about their travel wishes and plans. At the end output a prompt. User input is collected via the { type: USER_INPUT, payload: string } event.' }
         ]
       })
       console.log(completion.choices[0].message.content)
       return completion.choices[0].message
     }),
-    "actor(unsafe_machine)": fromPromise(async ({ self, input }) => {
-      console.log(self)
-      // Demo purposes only :)
-      console.log('MACHINE DEF', input.unsafe_machine)
-      const machineState = eval(`(${input.unsafe_machine})`)
-      const actorLogic = createMachine(machineState)
-      const actor = createActor(actorLogic, { inspect })
-      actor.start()
-      const output = await toPromise(actor);
-      return output
-    })
   },
 }).createMachine({
   context: ({ input }) => ({
     messages: [],
     unsafe_machine: '',
+    childRef: null,
   }),
   id: "Code Execution",
   initial: "generating_state_machine",
@@ -110,16 +108,25 @@ export const machine = setup({
       },
     },
     executing: {
-      invoke: {
-        id: "unsafe_machine",
-        input: ({ context }) => ({
-          unsafe_machine: context.unsafe_machine
-        }),
-        onDone: {
-          target: "done",
+      entry: assign({
+        childRef: ({ context, spawn }) => {
+          // Demo purposes only :)
+          console.log('MACHINE DEF', context.unsafe_machine)
+          const machineState = eval(`(${context.unsafe_machine})`)
+          const childMachine = createMachine(machineState)
+          const original = childMachine.transition
+          childMachine.transition = (...args) => {
+            console.log('TRANSITION', args)
+            return original.apply(original, args)
+          }
+          return spawn(childMachine, { systemId: 'unsafe_machine' })
         },
-        src: "actor(unsafe_machine)",
-      },
+      }),
+      on: {
+        USER_INPUT: {
+          actions: ['forward_event']
+        }
+      }
     },
     done: {
       type: "final",

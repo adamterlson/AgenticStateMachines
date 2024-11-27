@@ -2,7 +2,7 @@ import { assign, createActor, fromPromise, setup, toPromise } from "xstate";
 import recipeThreadAgent from '../thread/thread'
 import OpenAI from "openai";
 
-const DELAY = 500
+const DELAY = 2000
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const openai = new OpenAI({
   apiKey,

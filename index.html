@@ -12,6 +12,9 @@
         }
         #agentSelect {
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         #messages {
             border: 1px solid #ccc;
@@ -37,6 +40,10 @@
         <select id="agents">
             <option value="">-- Select an Agent --</option>
         </select>
+        <label>
+            <input type="checkbox" id="inspectCheckbox" checked />
+            Inspect
+        </label>
         <button id="invokeAgentButton">Invoke Agent</button>
     </div>
     <div id="messages"></div>

@@ -4,12 +4,15 @@ import threadMachine from './actors/thread/thread'
 import supervisionMachine from './actors/supervision/supervision'
 import toolApprovalMachine from './actors/tool_approval/tool_approval'
 import { createActor } from 'xstate'
+import { createBrowserInspector } from '@statelyai/inspect';
+
+const { inspect } = createBrowserInspector();
 const agents = {
-  writer: [writerMachine, { input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
-  critic: [criticMachine, { input: { threadMessages: [{ role: 'assistant', content: "To make tacos, fill the tortillas with tomatoes, cheese, and grated carrots." }] } }],
-  thread: [threadMachine, { input: { dish: "Tacos" } }],
-  supervisor: [supervisionMachine],
-  toolApproval: [toolApprovalMachine, { input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
+  writer: [writerMachine, { inspect, input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
+  critic: [criticMachine, { inspect, input: { threadMessages: [{ role: 'assistant', content: "To make tacos, fill the tortillas with tomatoes, cheese, and grated carrots." }] } }],
+  thread: [threadMachine, { inspect, input: { dish: "Tacos" } }],
+  supervisor: [supervisionMachine, { inspect }],
+  toolApproval: [toolApprovalMachine, { inspect, input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
 }
 
 const agentSelect = document.getElementById('agents');

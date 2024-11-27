@@ -84,15 +84,7 @@ sendButton.addEventListener('click', () => {
         messageInput.value = ''; // Clear the input field
     }
 });
-
-// Optionally handle connection and disconnection events
-socket.on('connect', () => {
-    appendMessage('Connected to the server.');
-});
-
-socket.on('disconnect', () => {
-    appendMessage('Disconnected from the server.');
-});
+appendMessage('Connected to the server.');
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

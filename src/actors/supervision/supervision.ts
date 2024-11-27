@@ -1,7 +1,8 @@
 import { assign, createActor, fromPromise, setup, toPromise } from "xstate";
 import recipeThreadAgent from '../thread/thread'
-
 import OpenAI from "openai";
+
+const DELAY = 500
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const openai = new OpenAI({
   apiKey,
@@ -64,6 +65,7 @@ const machine = setup({
             }
         ]
       })
+      await new Promise(resolve => setTimeout(resolve, DELAY));
       console.log('Got plan message', JSON.stringify(completion.choices[0].message, null, 2))
       return completion.choices[0].message
     }),
@@ -84,6 +86,7 @@ const machine = setup({
     }),
     procurementAgent: fromPromise(async ({ input }) => {
       // Fake response
+      await new Promise(resolve => setTimeout(resolve, DELAY));
       const output = { role: 'assistant', content: 'Ingredients available' }
       return {
         role: "tool",
@@ -93,6 +96,7 @@ const machine = setup({
     }),
     mealPrepAgent: fromPromise(async ({ input }) => {
       // Fake response
+      await new Promise(resolve => setTimeout(resolve, DELAY));
       const output = { role: 'assistant', content: 'Meal delivered' }
       return {
         role: "tool",
@@ -102,6 +106,7 @@ const machine = setup({
     }),
     humanFeedbackAgent: fromPromise(async ({ input }) => {
       // Fake response
+      await new Promise(resolve => setTimeout(resolve, DELAY));
       const output = { role: 'assistant', content: '5/5' }
       return {
         role: "tool",
@@ -113,6 +118,10 @@ const machine = setup({
   types: {
     context: {} as {
       messages: Array<{ role: string, content: string }>
+      recipe: string
+      procurement: string
+      meal_prep: string
+      feedback: string
     },
   },
   guards: {
@@ -134,13 +143,17 @@ const machine = setup({
   },
   actions: {
     add_assistant_message: assign({ messages: ({ event, context }) => [...context.messages, event.output] }),
+    add_recipe: assign({ recipe: ({ event }) => event.output }),
+    add_procurement: assign({ procurement: ({ event }) => event.output }),
+    add_meal_prep: assign({ meal_prep: ({ event }) => event.output }),
+    add_feedback: assign({ feedback: ({ event }) => event.output }),
   }
 }).createMachine({
   id: "Supervisor",
   context: {
     messages: [
       { role: 'system', content: 'Your mission is to deliver a meal to a customer by coordinating actions using the tools available. You must start by creating a detailed execution plan to accomplish the goal. Each tool must be invoked once and only once, in the appropriate sequence based on your execution plan. Only one tool must be called at a time. Do not invoke the next tool until the previous has returned a result. Execute the `done` tool last.' }
-    ]
+    ],
   },
   initial: "Planning",
   states: {
@@ -187,7 +200,7 @@ const machine = setup({
         }),
         onDone: {
           target: "Planning",
-          actions: "add_assistant_message"
+          actions: ["add_assistant_message", "add_recipe"]
         },
       },
     },
@@ -199,7 +212,7 @@ const machine = setup({
         }),
         onDone: {
           target: "Planning",
-          actions: "add_assistant_message"
+          actions: ["add_assistant_message", "add_meal_prep"]
         },
       },
     },
@@ -211,7 +224,7 @@ const machine = setup({
         }),
         onDone: {
           target: "Planning",
-          actions: "add_assistant_message"
+          actions: ["add_assistant_message", "add_procurement"]
         },
       },
     },
@@ -223,7 +236,7 @@ const machine = setup({
         }),
         onDone: {
           target: "Planning",
-          actions: "add_assistant_message"
+          actions: ["add_assistant_message", "add_feedback"]
         },
       },
     },
@@ -231,6 +244,12 @@ const machine = setup({
       type: "final",
     },
   },
+  output: ({ context }) => ({
+    recipe: context.recipe,
+    procurement: context.procurement,
+    meal_prep: context.meal_prep,
+    feedback: context.feedback,
+  })
 });
 
 export default machine

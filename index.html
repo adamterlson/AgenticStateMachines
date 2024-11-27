@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Client</title>
+    <script src="./src/main" type="module"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+        #agentSelect {
+            margin-bottom: 1rem;
+        }
+        #messages {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+        #input {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #input input {
+            flex: 1;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Socket.IO Client</h1>
+    <div id="agentSelect">
+        <label for="agents">Select Agent:</label>
+        <select id="agents">
+            <option value="">-- Select an Agent --</option>
+        </select>
+        <button id="invokeAgentButton">Invoke Agent</button>
+    </div>
+    <div id="messages"></div>
+    <div id="input">
+        <input type="text" id="messageInput" placeholder="Type your message here..." disabled />
+        <button id="sendButton" disabled>Send</button>
+    </div>
+</body>
+</html>

@@ -59,6 +59,8 @@ export const machine = setup({
                 type: 'ASSISTANT_MESSAGE',
                 data: input,
               })),
+              // Send final result to the user
+              send_done
             }`
           },
           {
@@ -67,7 +69,7 @@ export const machine = setup({
   id: 'name',
   initial: 'initial state',
   context: {
-    data to collect from this flow
+    data to collect critical data to complete this flow
     key: value
   },
   // A list of logical steps to achieve goal
@@ -81,15 +83,15 @@ export const machine = setup({
         }
       }
     },
+    // TRANSITION TO THIS STATE WHEN DONE. DO NOT MODIFY THIS STATE. IT MUST BE INCLUDED IN THE OUTPUT.
     done: {
-      entry: 'send_done', // BE SURE TO INCLUDE THIS
+      entry: 'send_done',
       type: 'final'
     }
   },
-  output: ({ context }) => reduce context to return expected output
 }`
           },
-          { role: 'user', content: 'You are a trip advisor agent prompt generator. Your job is to write awesome prompts. Define a process for collecting information from the user one step at a time about their travel wishes and plans. At the end output a prompt.' }
+          { role: 'user', content: 'I am planning a trip to Paris. Help me plan my itinerary.' }
         ]
       })
       console.log(completion.choices[0].message.content)
@@ -132,9 +134,9 @@ export const machine = setup({
                 type: 'ASSISTANT_MESSAGE',
                 data: event,
               })),
-              send_done: emit(({ event }) => ({
+              send_done: emit(({ context }) => ({
                 type: 'DONE',
-                data: event,
+                data: context,
               })),
             }
           }).createMachine(machineState)
@@ -143,6 +145,10 @@ export const machine = setup({
           actor.start()
           actor.subscribe((snapshot) => {
             console.log('TRANSITION', snapshot)
+          })
+          actor.on('DONE', (event) => {
+            const context = event.data
+            console.log(context)
           })
           return actor
         },

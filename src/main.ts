@@ -93,7 +93,7 @@ sendButton.addEventListener('click', () => {
 	const message = messageInput.value.trim();
 	if (message && currentAgent) {
 		appendMessage(`You: ${message}`);
-		currentAgent.send({ type: 'USER_INPUT', payload: message });
+		currentAgent.send({ type: 'USER_MESSAGE', payload: message });
 		messageInput.value = ''; // Clear the input field
 	}
 });

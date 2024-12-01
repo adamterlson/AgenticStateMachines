@@ -104,7 +104,7 @@ const machine = setup({
         },
         approval_required: {
             on: {
-                USER_INPUT: [{
+                USER_MESSAGE: [{
                     target: 'using_tool',
                     guard: 'is_approval_message'
                 }, {

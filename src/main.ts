@@ -48,6 +48,19 @@ for (const agent of Object.keys(agents)) {
 	agentSelect.appendChild(option);
 }
 
+// Emit user messages to the server on Enter key press
+messageInput.addEventListener('keypress', (event) => {
+	if (event.key === 'Enter') {
+		const message = messageInput.value.trim();
+		if (message && currentAgent) {
+			appendMessage(`You: ${message}`);
+			currentAgent.send({ type: 'USER_MESSAGE', payload: message });
+			messageInput.value = ''; // Clear the input field
+		}
+		event.preventDefault(); // Prevent the default action of form submission if applicable
+	}
+});
+
 // Handle agent selection with button click
 invokeAgentButton.addEventListener('click', () => {
 	if (agents[agentSelect.value] != null) {

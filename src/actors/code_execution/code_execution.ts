@@ -124,7 +124,7 @@ export const machine = setup({
     },
     hosting: {
       entry: assign({
-        childRef: ({ context, spawn }) => {
+        childRef: ({ context, spawn, self }) => {
           console.log('MACHINE DEF', context.unsafe_machine)
           const machineState = eval(`(${context.unsafe_machine})`) // Demo purposes only :)
           // Define what actions this hosted machine can take
@@ -148,7 +148,9 @@ export const machine = setup({
           })
           actor.on('DONE', (event) => {
             const context = event.data
-            console.log(context)
+            debugger
+            console.log('GOT DONE EVENT', event, self)
+            self.send(event)
           })
           return actor
         },
@@ -156,7 +158,8 @@ export const machine = setup({
       on: {
         USER_MESSAGE: {
           actions: ['forward_event']
-        }
+        },
+        DONE: 'done'
       }
     },
     done: {

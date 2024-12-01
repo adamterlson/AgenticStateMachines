@@ -23,6 +23,7 @@ export const machine = setup({
       console.log('FORWARDING', event)
       return event
     }),
+    add_output: assign({ child_output: ({ event }) => event.data }),
     add_unsafe_machine: assign({ unsafe_machine: ({ event }) => event.output.content }),
     add_user_message: assign({ messages: ({ event, context }) => [...context.messages, { role: 'user', content: event.payload }] }),
     add_assistant_message: assign({ messages: ({ event, context }) => [...context.messages, event.output] }),
@@ -50,7 +51,7 @@ export const machine = setup({
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [
-          { role: 'system', content: 'You are a state machine definition writer. Your job is to write actor logic as a finite state machine using the xstate library v5 and typescript. Output a javascript fragment for the state machine definition. Only output the code, do not make any introduction or closing statements. Only output valid typescript. Do not attach a header. User messages are received by the event { type: "USER_MESSAGE", payload: data }.' },
+          { role: 'system', content: 'You are a state machine definition writer. Your job is to write actor logic as a finite state machine using the xstate library v5 and typescript. Output a javascript fragment for the state machine definition. Only output the code, do not make any introduction or closing statements. Only output valid typescript. Do not attach a header. The only valid event is { type: "USER_MESSAGE", payload: data }.' },
           {
             role: 'system', content: `Available actions:
             {
@@ -69,8 +70,8 @@ export const machine = setup({
   id: 'name',
   initial: 'initial state',
   context: {
-    data to collect critical data to complete this flow
-    key: value
+    // data to collect critical data to complete this flow
+    key: string value
   },
   // A list of logical steps to achieve goal
   states: {
@@ -124,7 +125,7 @@ export const machine = setup({
     },
     hosting: {
       entry: assign({
-        childRef: ({ context, spawn, self }) => {
+        childRef: ({ context, self }) => {
           console.log('MACHINE DEF', context.unsafe_machine)
           const machineState = eval(`(${context.unsafe_machine})`) // Demo purposes only :)
           // Define what actions this hosted machine can take
@@ -141,14 +142,8 @@ export const machine = setup({
             }
           }).createMachine(machineState)
           const actor = createActor(childMachine, { inspect })
-          console.log(actor)
           actor.start()
-          actor.subscribe((snapshot) => {
-            console.log('TRANSITION', snapshot)
-          })
           actor.on('DONE', (event) => {
-            const context = event.data
-            debugger
             console.log('GOT DONE EVENT', event, self)
             self.send(event)
           })
@@ -159,13 +154,17 @@ export const machine = setup({
         USER_MESSAGE: {
           actions: ['forward_event']
         },
-        DONE: 'done'
+        DONE: {
+          target: 'done',
+          actions: 'add_output',
+        }
       }
     },
     done: {
       type: "final",
     },
   },
+  output: ({ context }) => ({ role: 'assistant', content: 'Final output from child:' + JSON.stringify(context.child_output) })
 });
 
 export default machine

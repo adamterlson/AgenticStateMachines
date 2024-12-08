@@ -49,12 +49,16 @@ export const machine = setup({
     create_state_machine: fromPromise(async ({ input }) => {
       console.log('GETTING COMPLETION')
       const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         messages: [
-          { role: 'system', content: 'You are a state machine definition writer. Your job is to write actor logic as a finite state machine using the xstate library v5 and typescript. Output a javascript fragment for the state machine definition. Only output the code, do not make any introduction or closing statements. Only output valid typescript. Do not attach a header. The only valid event is { type: "USER_MESSAGE", payload: data }.' },
+          { role: 'system', content: 'You are a state machine definition writer. Your job is to write actor logic as a finite state machine using the xstate library v5 and typescript. Output a JSON object for the state machine definition. Only output the JSON, do not make any introduction or closing statements. Do not output "```json". Only output valid JSON. Do not attach a header.' },
+          { role: 'system', content: 'Use valid Xstate v5 API. cond has been renamed to `guard` be sure to update the code.' },
+          { role: 'system', content: 'Available events: { type: "USER_MESSAGE", payload: data }.' },
           {
             role: 'system', content: `Available actions:
             {
+              // Write the event to context
+              add_response: assign({ key: ({ event, input }) => event.output.content }),
               // Use to send a message to the user
               send_message: emit(({ input }) => ({
                 type: 'ASSISTANT_MESSAGE',
@@ -65,22 +69,41 @@ export const machine = setup({
             }`
           },
           {
-            role: 'system', content: `Expected output:   
+            role: 'system', content: `Available actors:
+            {
+              // Use the hotel_booking_agent to book a hotel
+              hotel_booking_agent
+              // Use the resaurant_booking_agent to make a reservation at a restaurant
+              restaurant_booking_agent
+            }`
+          },
+          {
+            role: 'system', content: `Expected JSON output:   
 {
   id: 'name',
-  initial: 'initial state',
-  context: {
-    // data to collect critical data to complete this flow
-    key: string value
-  },
+  initial: 'initial state'
+  // Initial context values that will be updated via events during the workflow.
+  context: {},
   // A list of logical steps to achieve goal
   states: {
-    some_state: {
-      entry: 'send_message',
+    waiting_on_input: {
+      entry: {
+        type: 'send_message',
+        params: { message: 'question to ask the user' }
+      },
       on: {
         SOME_EVENT: {
           target: 'next_state',
-          actions: assign({ key: ({ event, input }) => event.output.content }),
+          actions: 'add_response'
+        }
+      }
+    },
+    invoking_actor: {
+      invoke: {
+        src: 'actor name',
+        input: {}
+        onDone: {
+          target: 'next_state'
         }
       }
     },
@@ -92,7 +115,7 @@ export const machine = setup({
   },
 }`
           },
-          { role: 'user', content: 'I am planning a trip to Paris. Help me plan my itinerary.' }
+          { role: 'user', content: 'I am planning a trip to Paris. Help me create an itinerary for my travel which includes things to see, food to eat, and places to sleep.' }
         ]
       })
       console.log(completion.choices[0].message.content)
@@ -127,30 +150,42 @@ export const machine = setup({
       entry: assign({
         childRef: ({ context, self }) => {
           console.log('MACHINE DEF', context.unsafe_machine)
-          const machineState = eval(`(${context.unsafe_machine})`) // Demo purposes only :)
+          const machineState = eval(`(${context.unsafe_machine})`) // Ideally JSON.parse, assign and input are inline functions
+
           // Define what actions this hosted machine can take
           const childMachine = setup({
             actions: {
-              send_message: emit(({ event }) => ({
-                type: 'ASSISTANT_MESSAGE',
-                data: event,
-              })),
+              send_message: emit((event, params) => {
+                return {
+                  type: 'ASSISTANT_MESSAGE',
+                  data: params,
+                }
+              }),
               send_done: emit(({ context }) => ({
                 type: 'DONE',
                 data: context,
               })),
+            },
+            actors: {
+              hotel_booking_agent: fromPromise(({ input }) => Promise.resolve("hotel_booking_agent called with input: " + JSON.stringify(input)))
             }
           }).createMachine(machineState)
+
           const actor = createActor(childMachine, { inspect })
-          actor.start()
-          actor.on('DONE', (event) => {
-            console.log('GOT DONE EVENT', event, self)
+          
+          // Forward all events to parent
+          actor.on('*', (event) => {
             self.send(event)
           })
+
+          actor.start()
           return actor
         },
       }),
       on: {
+        ASSISTANT_MESSAGE: {
+          actions: emit(({ event }) => event),
+        },
         USER_MESSAGE: {
           actions: ['forward_event']
         },

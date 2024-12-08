@@ -73,13 +73,9 @@ invokeAgentButton.addEventListener('click', () => {
 
 		// Handle incoming messages
 		currentAgent.on('*', (data) => {
+			console.log('ROOOOOOOT', data)
 			appendMessage(`Agent Message: ${JSON.stringify(data)}`);
 		});
-
-        currentAgent.on('INPUT_REQUEST', (data) => {
-            console.log('INput request', data)
-            alert('Display UI here')
-        })
 
 		currentAgent.subscribe((snapshot) => {
 			if (snapshot.status === 'done') {

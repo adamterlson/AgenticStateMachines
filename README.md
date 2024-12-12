@@ -24,8 +24,6 @@ He further elaborates that agentic AI systems are characterized by their autonom
 
 > "They can make decisions and act without the need for human intervention or a human in the loop. They are always online, listening, reacting and analyzing domain-specific data in real time, making decisions and acting on them."  
 
-AI Agents are **Finite State Machines**—a pattern/tool that has been foundational in engineering long-running workflows, service orchestration, and predictable systems.
-
 ## The Perfect Pair: LLMs and State Machines for Smarter, More Reliable AI Agents
 
 State machines are a powerful complement to the unpredictability of LLMs. By combining FSMs with LLMs, developers can craft systems that balance the creativity and flexibility of generative AI with the robustness and reliability of FSMs. Using FSMs can make AI agents that are:

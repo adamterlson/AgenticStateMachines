@@ -1,7 +1,17 @@
 
-# Agentic AI State Machine Patterns
+# Agentic State Machines—Pattern Library
 
 Harnessing the timeless **Finite State Machine (FSM)** and **Actor Model** alongside **Large Language Models (LLMs)** provides a structured and reliable approach to developing agentic cognitive architectures. Patterns such as tool use, reflection, planning, supervision, and human-in-the-loop interaction can be implemented effectively using FSMs. Together, FSMs and LLMs enable the creation of applications that are understandable, scalable, observable, modular, and resilient.
+
+## Examples of Agentic AI Patterns Using FSMs
+
+This repository aims to demonstrate common agentic patterns implemented with FSMs:
+
+1. [**Writer w/ Tool Use**](./writer/writer.md): Managing tools with clearly defined activation, execution, and error states.
+2. [**Reflection**](./reflection/reflection.md): Iterating over prior states and context to improve decisions and outputs.
+3. [**Collaboration (Routing)**](./collaboration/collaboration.md): Defining sequence to reach desired outcome based on predefined rules or dynamic context.
+4. [**Human-in-the-Loop**]('./human_in_the_loop/human_in_the_loop.md): Defining explicit manual interactions in workflows.
+5. [**Code Execution**](./code_execution/code_execution.md): Generating a novel process to accomplish the mission and hosting it with injected implementation and behavior.
 
 ## What is an AI Agent?
 
@@ -14,7 +24,7 @@ He further elaborates that agentic AI systems are characterized by their autonom
 
 > "They can make decisions and act without the need for human intervention or a human in the loop. They are always online, listening, reacting and analyzing domain-specific data in real time, making decisions and acting on them."  
 
-By this description, AI Agents are also a **Finite State Machine (FSM)**—a pattern/tool that has been foundational in engineering long-running workflows and predictable systems.
+AI Agents are **Finite State Machines**—a pattern/tool that has been foundational in engineering long-running workflows, service orchestration, and predictable systems.
 
 ## The Perfect Pair: LLMs and State Machines for Smarter, More Reliable AI Agents
 
@@ -69,17 +79,6 @@ By leveraging **finite state machines**—a "bread and butter" tool in software 
 - **Language Agnostic**: Finite State Machines can be built in every language—having an understanding of Agentic patterns using FSMs will enable Agentic systems in any system, regardless of language
 
 In short, FSMs provide a flexible, extensible, and robust foundation for developing agentic AI systems that scale with confidence.
-
----
-
-## Examples of Agentic AI Patterns Using FSMs
-
-This repository aims to demonstrate common agentic patterns implemented with FSMs:
-
-1. **Tool Use**: Managing tools with clearly defined activation, execution, and error states.
-2. **Reflection**: Iterating over prior states and context to improve decisions and outputs.
-3. **Routing**: Defining sequence to reach desired outcome based on predefined rules or dynamic context.
-5. **Human-in-the-Loop**: Defining explicit manual interactions in workflows.
 
 ---
 

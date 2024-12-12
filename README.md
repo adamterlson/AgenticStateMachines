@@ -53,22 +53,11 @@ State machines are a powerful complement to the unpredictability of LLMs. By com
 
 While libraries and frameworks like LangChain, LangGraph, AutoGen, and CrewAI can accelerate Agent development, they introduce several challenges:
 
-### 1. **Additional Cognitive Load**
-   - Developers must learn the framework’s abstractions and APIs, which may not align with their mental models or existing workflows.
-
-### 2. **Tool Lock-In**
-   - Frameworks often lock developers into specific APIs or patterns, making it harder to migrate or evolve the architecture over time.
-   - Frameworks require the use of a specific programming language (notably Python)
-
-### 3. **Obscured Behavior**
-   - Frameworks abstract away important details of execution, making it difficult to debug or analyze the system's behavior in edge cases.
-   - Learning how Agentic systems work behind the scenes can be made difficult by these abstractions
-
-### 4. **Complexity Overhead**
-   - Frameworks often introduce layers of complexity, requiring additional code to fit specific use cases or integrate with other parts of the system.
-
-### 5. **Limited Flexibility**
-   - Customization can be challenging, as frameworks often prioritize general-purpose solutions over niche requirements.
+1. **Additional Cognitive Load**—Developers must learn the framework’s abstractions and APIs, which may not align with their mental models or existing workflows.
+2. **Tool Lock-In**—Frameworks often lock developers into specific APIs or patterns, making it harder to migrate or evolve the architecture over time. Frameworks require the use of a specific programming language (notably Python)
+3. **Obscured Behavior**—Frameworks abstract away important details of execution, making it difficult to debug or analyze the system's behavior in edge cases. Learning how Agentic systems work behind the scenes can be made difficult by these abstractions
+4. **Complexity Overhead**—Frameworks often introduce layers of complexity, requiring additional code to fit specific use cases or integrate with other parts of the system.
+5. **Limited Flexibility**—Customization can be challenging, as frameworks often prioritize general-purpose solutions over niche requirements.
 
 By leveraging **finite state machines**—a "bread and butter" tool in software engineering—developers can avoid the pitfalls of heavy frameworks and instead:
 
@@ -84,4 +73,4 @@ In short, FSMs provide a flexible, extensible, and robust foundation for develop
 
 ## Contributing
 
-Contributions are welcome! If you have ideas for new patterns, improvements, or discussions about state machines in agentic architectures, feel free to open an issue or submit a pull request.
+Contributions and feedback are welcome! If you have ideas for new patterns, improvements, or discussions about state machines in agentic architectures, feel free to open an issue or submit a pull request.

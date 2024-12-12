@@ -53,7 +53,7 @@ messageInput.addEventListener('keypress', (event) => {
 	if (event.key === 'Enter') {
 		const message = messageInput.value.trim();
 		if (message && currentAgent) {
-			appendMessage('Human', message);
+			appendMessage('Human: ' + message);
 			currentAgent.send({ type: 'USER_MESSAGE', payload: message });
 			messageInput.value = ''; // Clear the input field
 		}

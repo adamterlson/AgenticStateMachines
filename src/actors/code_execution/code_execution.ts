@@ -118,7 +118,7 @@ done: {
     unsafe_machine: '',
     childRef: null,
   }),
-  id: "Code Execution",
+  id: "Code Execution (Trip Planning)",
   initial: "generating_state_machine",
   states: {
     generating_state_machine: {

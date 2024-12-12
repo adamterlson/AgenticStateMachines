@@ -8,7 +8,7 @@ const openai = new OpenAI({
   // Risks to api key mitigated via vite environment variables
   dangerouslyAllowBrowser: true 
 });
-
+const DELAY = 2000
 const machine = setup({
     types: {
         input: {} as {
@@ -40,6 +40,7 @@ const machine = setup({
                     }
                 ]
             })
+            await new Promise(resolve => setTimeout(resolve, DELAY));
             console.log(completion.choices[0].message)
             return completion.choices[0].message
         }),
@@ -69,7 +70,7 @@ const machine = setup({
         is_approval_message: ({ event }) => event.payload === 'approved'
     }
 }).createMachine({
-    id: "WriterToolApproval",
+    id: "Human in the Loop (Recipe Agent Tool Approval)",
     initial: 'writing',
     context: ({ input }) => ({
         messages: [

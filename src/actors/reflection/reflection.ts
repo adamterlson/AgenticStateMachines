@@ -25,7 +25,7 @@ const machine = setup({
         criticAgent,
     },
 }).createMachine({
-    id: "Reflection/Recipe",
+    id: "Reflection (Recipe)",
     initial: "writing",
     context: ({ input }) => ({
         // Goal

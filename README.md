@@ -7,11 +7,11 @@ Harnessing the timeless **Finite State Machine (FSM)** and **Actor Model** along
 
 This repository aims to demonstrate common agentic patterns implemented with FSMs:
 
-1. [**Writer w/ Tool Use**](./writer/writer.md): Managing tools with clearly defined activation, execution, and error states.
-2. [**Reflection**](./reflection/reflection.md): Iterating over prior states and context to improve decisions and outputs.
-3. [**Collaboration (Routing)**](./collaboration/collaboration.md): Defining sequence to reach desired outcome based on predefined rules or dynamic context.
-4. [**Human-in-the-Loop**]('./human_in_the_loop/human_in_the_loop.md): Defining explicit manual interactions in workflows.
-5. [**Code Execution**](./code_execution/code_execution.md): Generating a novel process to accomplish the mission and hosting it with injected implementation and behavior.
+1. [**Writer w/ Tool Use**](./actors/writer/writer.md): Managing tools with clearly defined activation, execution, and error states.
+2. [**Reflection**](./src/actors/reflection/reflection.md): Iterating over prior states and context to improve decisions and outputs.
+3. [**Collaboration (Routing)**](./src/actors/collaboration/collaboration.md): Defining sequence to reach desired outcome based on predefined rules or dynamic context.
+4. [**Human-in-the-Loop**]('./src/actors/human_in_the_loop/human_in_the_loop.md): Defining explicit manual interactions in workflows.
+5. [**Code Execution**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the mission and hosting it with injected implementation and behavior.
 
 ## What is an AI Agent?
 

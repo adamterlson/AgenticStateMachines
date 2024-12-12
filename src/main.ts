@@ -2,7 +2,7 @@ import writerMachine from './actors/writer/writer'
 import criticMachine from './actors/critic/critic'
 import reflectionMachine from './actors/reflection/reflection'
 import routingMachine from './actors/routing/routing'
-import toolApprovalMachine from './actors/tool_approval/tool_approval'
+import toolApprovalMachine from './actors/human_in_the_loop/human_in_the_loop'
 import codeExecutionMachine from './actors/code_execution/code_execution'
 import { createActor } from 'xstate'
 import { createBrowserInspector } from '@statelyai/inspect';
@@ -86,7 +86,7 @@ invokeAgentButton.addEventListener('click', () => {
 		});
 		currentAgent.start()
 		clearMessages()
-		appendMessage(`Agent Invoked: ${agentSelect.value}`);
+		appendMessage(`Agent Invoked: ${agents[agentSelect.value][0].config.id}`);
 		messageInput.disabled = false;
 		sendButton.disabled = false;
 	} else {

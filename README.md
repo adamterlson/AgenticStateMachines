@@ -30,24 +30,12 @@ AI Agents are **Finite State Machines**—a pattern/tool that has been foundatio
 
 State machines are a powerful complement to the unpredictability of LLMs. By combining FSMs with LLMs, developers can craft systems that balance the creativity and flexibility of generative AI with the robustness and reliability of FSMs. Using FSMs can make AI agents that are:
 
-### 1. **Statically Analyzable**
-   - State machines offer a clear, formal definition of all states and transitions in the system. Developers can analyze all possible scenarios—including edge cases—before runtime.
-
-### 2. **Observable/Auditable**
-   - FSMs allow you to monitor the agent's current state and transitions in real time. This transparency is crucial for debugging and understanding complex workflows.
-
-### 3. **Predictable**
-   - While LLMs introduce stochastic behavior, FSMs are deterministic. This predictability ensures that the overall system behaves consistently, even when the LLM does not.
-
-### 4. **Resilient to Errors**
-   - FSMs excel at defining fallback states and error recovery paths, making them ideal for systems where failure modes need to be well-understood and manageable.
-   - FSMs can enforce constraints on transitions, ensuring the system cannot enter invalid states, thus reducing the likelihood of cascading failures.
-
-### 5. **Modular**
-   - By breaking workflows into discrete states, FSMs promote modularity, making it easier to extend or adapt the system without introducing bugs.
-
-### 7. **Aligned with Engineering Practices**
-   - FSMs are well-understood tools across disciplines, meaning developers can leverage existing knowledge and tooling to build robust systems.
+1. **Statically Analyzable**—State machines offer a clear, formal definition of all states and transitions in the system. Developers can analyze all possible scenarios—including edge cases—before runtime.
+2. **Observable/Auditable**—FSMs allow you to monitor the agent's current state and transitions in real time. This transparency is crucial for debugging and understanding complex workflows.
+3. **Predictable**—While LLMs introduce stochastic behavior, FSMs are deterministic. This predictability ensures that the overall system behaves consistently, even when the LLM does not.
+4. **Resilient to Errors**—FSMs excel at defining fallback states and error recovery paths, making them ideal for systems where failure modes need to be well-understood and manageable. FSMs can enforce constraints on transitions, ensuring the system cannot enter invalid states, thus reducing the likelihood of cascading failures.
+5. **Modular**—By breaking workflows into discrete states, FSMs promote modularity, making it easier to extend or adapt the system without introducing bugs.
+6. **Aligned with Engineering Practices**—FSMs are well-understood tools across disciplines, meaning developers can leverage existing knowledge and tooling to build robust systems.
 
 ## Foundational/Ubiquitous Patterns + LLM Generation > API Abstraction
 
@@ -68,8 +56,6 @@ By leveraging **finite state machines**—a "bread and butter" tool in software 
 - **Language Agnostic**: Finite State Machines can be built in every language—having an understanding of Agentic patterns using FSMs will enable Agentic systems in any system, regardless of language
 
 In short, FSMs provide a flexible, extensible, and robust foundation for developing agentic AI systems that scale with confidence.
-
----
 
 ## Contributing
 

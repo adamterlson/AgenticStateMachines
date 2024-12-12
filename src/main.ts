@@ -1,7 +1,7 @@
 import writerMachine from './actors/writer/writer'
 import criticMachine from './actors/critic/critic'
 import reflectionMachine from './actors/reflection/reflection'
-import routingMachine from './actors/routing/routing'
+import routingMachine from './actors/collaboration/collaboration'
 import toolApprovalMachine from './actors/human_in_the_loop/human_in_the_loop'
 import codeExecutionMachine from './actors/code_execution/code_execution'
 import { createActor } from 'xstate'

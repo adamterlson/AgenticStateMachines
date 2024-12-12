@@ -21,7 +21,6 @@ const machine = setup({
     },
     actors: {
         recipe_critic: fromPromise(async ({ input }) => {
-            console.log('GETTING COMPLETION')
             const completion = await openai.chat.completions.create({
                 model: "gpt-4o-mini",
                 messages: input.messages
@@ -34,6 +33,7 @@ const machine = setup({
         add_assistant_message: assign({ messages: ({ event, context }) => [...context.messages, event.output] }),
     }
 }).createMachine({
+    id: 'Critic (Recipe)',
     initial: 'critiquing_recipe',
     context: ({ input }) => ({ 
         messages: [

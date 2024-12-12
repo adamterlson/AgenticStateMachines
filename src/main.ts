@@ -1,7 +1,7 @@
 import writerMachine from './actors/writer/writer'
 import criticMachine from './actors/critic/critic'
-import threadMachine from './actors/thread/thread'
-import supervisionMachine from './actors/supervision/supervision'
+import reflectionMachine from './actors/reflection/reflection'
+import routingMachine from './actors/routing/routing'
 import toolApprovalMachine from './actors/tool_approval/tool_approval'
 import codeExecutionMachine from './actors/code_execution/code_execution'
 import { createActor } from 'xstate'
@@ -11,8 +11,8 @@ const { inspect } = createBrowserInspector();
 const agents = {
 	writer: [writerMachine, { input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
 	critic: [criticMachine, { input: { threadMessages: [{ role: 'assistant', content: "To make tacos, fill the tortillas with tomatoes, cheese, and grated carrots." }] } }],
-	thread: [threadMachine, { input: { dish: "Tacos" } }],
-	supervisor: [supervisionMachine],
+	reflection: [reflectionMachine, { input: { dish: "Tacos" } }],
+	router: [routingMachine],
 	toolApproval: [toolApprovalMachine, { input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
 	codeExecution: [codeExecutionMachine],
 }
@@ -44,7 +44,7 @@ console.log(Object.keys(agents))
 for (const agent of Object.keys(agents)) {
 	const option = document.createElement('option');
 	option.value = agent;
-	option.textContent = agent.charAt(0).toUpperCase() + agent.slice(1);
+	option.textContent = agents[agent][0].config.id;
 	agentSelect.appendChild(option);
 }
 
@@ -53,7 +53,7 @@ messageInput.addEventListener('keypress', (event) => {
 	if (event.key === 'Enter') {
 		const message = messageInput.value.trim();
 		if (message && currentAgent) {
-			appendMessage(`You: ${message}`);
+			appendMessage('Human', message);
 			currentAgent.send({ type: 'USER_MESSAGE', payload: message });
 			messageInput.value = ''; // Clear the input field
 		}
@@ -72,15 +72,14 @@ invokeAgentButton.addEventListener('click', () => {
 		currentAgent = createActor(agents[agentSelect.value][0], finalOptions);
 
 		// Handle incoming messages
-		currentAgent.on('*', (data) => {
-			console.log('ROOOOOOOT', data)
-			appendMessage(`Agent Message: ${JSON.stringify(data)}`);
+		currentAgent.on('*', (event) => {
+			appendMessage(`Agent Message: ${JSON.stringify(event.data)}`);
 		});
 
 		currentAgent.subscribe((snapshot) => {
 			if (snapshot.status === 'done') {
-				appendMessage(`Output: ${JSON.stringify(snapshot.output)}`);
-				// appendMessage(`Context: ${JSON.stringify(snapshot.context)}`)
+				console.log('Context', snapshot.context)
+				appendMessage(`Final Result: ${JSON.stringify(snapshot.output)}`);
 			} else {
 				appendMessage(`Progress: ${snapshot.value}...`)
 			}

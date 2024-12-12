@@ -1,1 +1,0 @@
-![Supervision](./supervision.png)

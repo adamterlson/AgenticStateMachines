@@ -1,4 +1,4 @@
-![Thread](./thread.png)
+![Reflection](./reflection.png)
 
 Writer and Critic in loop with configurable number of turns to refine the output based on feedback.
 

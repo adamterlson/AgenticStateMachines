@@ -22,7 +22,6 @@ const machine = setup({
             return ['Tortillas', 'Beef', 'Beans', 'Tomatoes', 'Lettuce', 'Cheese', 'Carrots', 'Pickles', 'Bricks', 'Super Fatty Yogurt']
         }),
         recipe_author: fromPromise(async ({ input }) => {
-            console.log('GETTING COMPLETION', input.messages)
             const completion = await openai.chat.completions.create({
                 model: "gpt-4o-mini",
                 messages: input?.messages,

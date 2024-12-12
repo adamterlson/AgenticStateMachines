@@ -74,13 +74,12 @@ In short, FSMs provide a flexible, extensible, and robust foundation for develop
 
 ## Examples of Agentic AI Patterns Using FSMs
 
-This repository demonstrates common agentic patterns implemented with FSMs:
+This repository aims to demonstrate common agentic patterns implemented with FSMs:
 
 1. **Tool Use**: Managing tools with clearly defined activation, execution, and error states.
-2. **Reflection**: Iterating over prior states and outcomes to improve decisions.
-3. **Planning**: Sequencing future states and transitions based on goals.
-4. **Supervision**: Escalating to predefined states when supervision or intervention is required.
-5. **Human-in-the-Loop**: Defining handoff states where humans can interject.
+2. **Reflection**: Iterating over prior states and context to improve decisions and outputs.
+3. **Routing**: Defining sequence to reach desired outcome based on predefined rules or dynamic context.
+5. **Human-in-the-Loop**: Defining explicit manual interactions in workflows.
 
 ---
 

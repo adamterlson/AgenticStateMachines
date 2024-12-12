@@ -22,7 +22,6 @@ const machine = setup({
             return ['Tortillas', 'Beef', 'Beans', 'Tomatoes', 'Lettuce', 'Cheese', 'Carrots', 'Pickles', 'Bricks', 'Super Fatty Yogurt']
         }),
         recipe_author: fromPromise(async ({ input }) => {
-            console.log('GETTING COMPLETION')
             const completion = await openai.chat.completions.create({
                 model: "gpt-4o-mini",
                 messages: input?.messages,
@@ -63,14 +62,14 @@ const machine = setup({
         })),
     }
 }).createMachine({
-    id: "Writer/Recipe",
+    id: "Writer (Recipe)",
     initial: 'writing',
     context: ({ input }) => ({
         messages: [
             // Role
             { role: "system", content: "You are a recipe writer that responds to feedback. Recipes are a single sentence. Begin by using the available tools to gather required information. Begin response with 'Writer:'. Do not include any ingredients in the recipe that are not available in the inventory." },
             // Backstory
-            ...input.threadMessages
+            ...Array.isArray(input.threadMessages) ? input.threadMessages : []
         ],
     }),
     states: {
@@ -101,7 +100,7 @@ const machine = setup({
                 src: 'get_inventory',
                 onDone: {
                     target: 'writing',
-                    actions: 'add_tool_response'
+                    actions: ['add_tool_response', 'emit_message']
                 }
             }
         },

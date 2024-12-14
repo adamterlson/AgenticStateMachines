@@ -16,7 +16,7 @@ const agents = {
 	router: [routingMachine],
 	toolApproval: [toolApprovalMachine, { input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
 	codeExecution: [codeExecutionMachine],
-	agentGenerationMachine: [agentGenerationMachine, { input: { goal_info: 'Plan a trip to paris' } }]
+	agentGenerationMachine: [agentGenerationMachine, { input: { goal_info: 'You are a travel agent. Help me plan a trip to paris.' } }]
 }
 
 const agentSelect = document.getElementById('agents');

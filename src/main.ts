@@ -4,6 +4,7 @@ import reflectionMachine from './actors/reflection/reflection'
 import routingMachine from './actors/collaboration/collaboration'
 import toolApprovalMachine from './actors/human_in_the_loop/human_in_the_loop'
 import codeExecutionMachine from './actors/code_execution/code_execution'
+import agentGenerationMachine from './actors/agent_generation/agent_generation'
 import { createActor } from 'xstate'
 import { createBrowserInspector } from '@statelyai/inspect';
 
@@ -15,6 +16,7 @@ const agents = {
 	router: [routingMachine],
 	toolApproval: [toolApprovalMachine, { input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }],
 	codeExecution: [codeExecutionMachine],
+	agentGenerationMachine: [agentGenerationMachine, { input: { goal_info: 'Plan a trip to paris' } }]
 }
 
 const agentSelect = document.getElementById('agents');
@@ -81,7 +83,7 @@ invokeAgentButton.addEventListener('click', () => {
 				console.log('Context', snapshot.context)
 				appendMessage(`Final Result: ${JSON.stringify(snapshot.output)}`);
 			} else {
-				appendMessage(`Progress: ${snapshot.value}...`)
+				appendMessage(`Progress: ${JSON.stringify(snapshot.value)}...`)
 			}
 		});
 		currentAgent.start()

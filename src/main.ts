@@ -81,7 +81,7 @@ invokeAgentButton.addEventListener('click', () => {
 		currentAgent.subscribe((snapshot) => {
 			if (snapshot.status === 'done') {
 				console.log('Context', snapshot.context)
-				appendMessage(`Final Result: ${JSON.stringify(snapshot.output)}`);
+				appendMessage(`Agent Done: ${JSON.stringify(snapshot.output)}`);
 			} else {
 				appendMessage(`Progress: ${JSON.stringify(snapshot.value)}...`)
 			}

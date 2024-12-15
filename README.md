@@ -3,6 +3,14 @@
 
 Harnessing the timeless **Finite State Machine (FSM)** and **Actor Model** alongside **Large Language Models (LLMs)** provides a structured and reliable approach to developing agentic cognitive architectures. Patterns such as tool use, reflection, planning, supervision, and human-in-the-loop interaction can be implemented effectively using FSMs. Together, FSMs and LLMs enable the creation of applications that are understandable, scalable, observable, modular, and resilient.
 
+## Getting Started
+
+```
+echo "VITE_OPENAI_API_KEY=your openai api key here" >> .env.local
+npm install
+npm run dev # Start Vite server
+```
+
 ## Examples of Agentic AI Patterns Using FSMs
 
 This repository aims to demonstrate common agentic patterns implemented with FSMs:

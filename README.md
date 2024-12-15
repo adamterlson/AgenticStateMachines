@@ -28,7 +28,7 @@ He further elaborates that agentic AI systems are characterized by their autonom
 
 State machines are a powerful complement to the unpredictability of LLMs. By combining FSMs with LLMs, developers can craft systems that balance the creativity and flexibility of generative AI with the robustness and reliability of FSMs. Using FSMs can make AI agents that are:
 
-- **Statically Analyzable**—State machines offer a clear, formal definition of all states and transitions in the system. Developers can analyze all possible scenarios—including edge cases—before runtime.
+- **Statically Analyzable**—State machines offer a clear, formal definition of all states and transitions in the system. Developers can easily build process to handle and recover from errors.
 - **Observable/Auditable**—FSMs allow you to monitor the agent's current state and transitions in real time. This transparency is crucial for debugging and understanding complex workflows.
 - **Predictable**—While LLMs introduce stochastic behavior, FSMs are deterministic. This predictability ensures that the overall system behaves consistently, even when the LLM does not.
 - **Resilient to Errors**—FSMs excel at defining fallback states and error recovery paths, making them ideal for systems where failure modes need to be well-understood and manageable. FSMs can enforce constraints on transitions, ensuring the system cannot enter invalid states, thus reducing the likelihood of cascading failures.

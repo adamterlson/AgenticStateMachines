@@ -1,56 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socket.IO Client</title>
-    <script src="./src/main" type="module"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-            background-color: #ccc;
-        }
-        #agentSelect {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        #messages {
-            border: 1px solid #ccc;
-            padding: 1rem;
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-        }
-        #input {
-            display: flex;
-            gap: 0.5rem;
-        }
-        #input input {
-            flex: 1;
-            padding: 0.5rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Socket.IO Client</title>
+  <script src="./src/main" type="module"></script>
+  <style>
+    /* Base resets & typography */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    /* Container for the entire content */
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
+    }
+
+    h1 {
+      margin-bottom: 1.5rem;
+      font-weight: normal;
+    }
+
+    /* Agent select section */
+    #agentSelect {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    #agentSelect label {
+      font-weight: 600;
+      margin-right: 0.25rem;
+    }
+
+    #agentSelect select,
+    #agentConfigInput,
+    #invokeAgentButton,
+    #inspectCheckbox {
+      font-size: 1rem;
+    }
+
+    #agentConfigInput {
+      flex: 1 1 100%;
+      width: 100%;
+      max-width: 100%;
+      min-height: 120px;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    #invokeAgentButton {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    #invokeAgentButton:hover {
+      background-color: #0056b3;
+    }
+
+    /* Messages area */
+    .messages-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .messages-container > div {
+      flex: 1;
+    }
+
+    #stateUpdates,
+    #chatMessages {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+      background-color: #fafafa;
+    }
+
+    #stateUpdates-title,
+    #chatMessages-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Input area */
+    #input {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      padding-top: 1rem;
+    }
+
+    #messageInput {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    #sendButton {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    #sendButton:hover {
+      background-color: #218838;
+    }
+
+    #sendButton:disabled,
+    #messageInput:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <h1>Socket.IO Client</h1>
     <div id="agentSelect">
-        <label for="agents">Select Agent:</label>
-        <select id="agents">
-            <option value="">-- Select an Agent --</option>
-        </select>
-        <label>
-            <input type="checkbox" id="inspectCheckbox" checked />
-            Inspect
-        </label>
-        <button id="invokeAgentButton">Invoke Agent</button>
+      <label for="agents">Select Agent:</label>
+      <select id="agents">
+        <option value="">-- Select an Agent --</option>
+      </select>
+
+      <label for="agentConfigInput">Configuration:</label>
+      <textarea id="agentConfigInput" placeholder="Enter agent config..."></textarea>
+
+      <label>
+        <input type="checkbox" id="inspectCheckbox" checked/>
+        Inspect
+      </label>
+      
+      <button id="invokeAgentButton">Invoke Agent</button>
     </div>
-    <div id="messages"></div>
-    <div id="input">
-        <input type="text" id="messageInput" placeholder="Type your message here..." disabled />
+
+    <div class="messages-container">
+      <div>
+      <div id="stateUpdates-title">System Log</div>
+      <div id="stateUpdates">
+      </div></div>
+      <div>
+      <div id="chatMessages-title">Messages</div>
+      <div id="chatMessages">
+      </div>
+      <div id="input">
+        <input
+          type="text"
+          id="messageInput"
+          placeholder="Type your message here..."
+          disabled
+        />
         <button id="sendButton" disabled>Send</button>
+      </div></div>
     </div>
+
+  </div>
 </body>
 </html>

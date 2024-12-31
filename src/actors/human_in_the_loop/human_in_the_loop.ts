@@ -60,14 +60,14 @@ const machine = setup({
         remove_tool_call: assign({
             messages: ({  context }) => context.messages.slice(0, -1)
         }),
-        emit_message: emit(({ context }) => ({
+        notify_admin: emit(({ context }) => ({
             type: 'SYSTEM_MESSAGE',
-            data: context.messages[context.messages.length - 1],
+            data: 'Approval required. Send `approve` or `deny`.',
         })),
     },
     guards: {
         is_tool_call: ({ context, event }) => event.output.tool_calls != null,
-        is_approval_message: ({ event }) => event.payload === 'approved'
+        is_approval_message: ({ event }) => event.payload === 'approve'
     }
 }).createMachine({
     id: "Human in the Loop (Recipe Agent Tool Approval)",
@@ -93,16 +93,17 @@ const machine = setup({
                     {
                         guard: 'is_tool_call',
                         target: 'approval_required',
-                        actions: ['add_assistant_message', 'emit_message']
+                        actions: ['add_assistant_message']
                     },
                     {
                         target: 'done',
-                        actions: ['add_assistant_message', 'emit_message']
+                        actions: ['add_assistant_message']
                     }
                 ],
             },
         },
         approval_required: {
+            entry: 'notify_admin',
             on: {
                 USER_MESSAGE: [{
                     target: 'using_tool',

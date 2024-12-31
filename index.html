@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Socket.IO Client</title>
   <script src="./src/main" type="module"></script>
   <style>
@@ -82,18 +83,18 @@
     }
 
     /* Messages area */
-    .messages-container {
+    #messages-container {
       display: flex;
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
 
-    .messages-container > div {
+    #messages-container>div {
       flex: 1;
     }
 
-    #stateUpdates,
-    #chatMessages {
+    .stateUpdates,
+    .chatMessages {
       flex: 1;
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -103,28 +104,28 @@
       background-color: #fafafa;
     }
 
-    #stateUpdates-title,
-    #chatMessages-title {
+    .stateUpdates-title,
+    .chatMessages-title {
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
 
     /* Input area */
-    #input {
+    .input {
       display: flex;
       gap: 1rem;
       align-items: center;
       padding-top: 1rem;
     }
 
-    #messageInput {
+    .messageInput {
       flex: 1;
       padding: 0.5rem;
       border-radius: 4px;
       border: 1px solid #ddd;
     }
 
-    #sendButton {
+    .sendButton {
       background-color: #28a745;
       color: #fff;
       border: none;
@@ -134,17 +135,22 @@
       transition: background-color 0.2s ease-in-out;
     }
 
-    #sendButton:hover {
+    .sendButton:hover {
       background-color: #218838;
     }
 
-    #sendButton:disabled,
-    #messageInput:disabled {
+    .sendButton:disabled,
+    .messageInput:disabled {
       opacity: 0.65;
       cursor: not-allowed;
     }
+
+    .hide {
+      display: none
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Socket.IO Client</h1>
@@ -158,33 +164,30 @@
       <textarea id="agentConfigInput" placeholder="Enter agent config..."></textarea>
 
       <label>
-        <input type="checkbox" id="inspectCheckbox" checked/>
+        <input type="checkbox" id="inspectCheckbox" checked />
         Inspect
       </label>
-      
+
       <button id="invokeAgentButton">Invoke Agent</button>
     </div>
 
-    <div class="messages-container">
-      <div>
-      <div id="stateUpdates-title">System Log</div>
-      <div id="stateUpdates">
-      </div></div>
-      <div>
-      <div id="chatMessages-title">Messages</div>
-      <div id="chatMessages">
+    <div>
+      <div class="stateUpdates-title">System Log</div>
+      <div class="stateUpdates">
       </div>
-      <div id="input">
-        <input
-          type="text"
-          id="messageInput"
-          placeholder="Type your message here..."
-          disabled
-        />
-        <button id="sendButton" disabled>Send</button>
-      </div></div>
     </div>
+    <div id="message-template" class="hide">
+      <div class="chatMessages-title">Messages</div>
+      <div class="chatMessages">
+      </div>
+      <div class="input">
+        <input type="text" class="messageInput" placeholder="Type your message here..." />
+        <button class="sendButton">Send</button>
+      </div>
+    </div>
+    <div id="messages-container"></div>
 
   </div>
 </body>
+
 </html>

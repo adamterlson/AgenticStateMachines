@@ -102,15 +102,16 @@ invokeAgentButton.addEventListener('click', () => {
 	currentAgent = createActor(agents[agentKey][0], finalOptions);
 	clearMessages(); // Clear old messages
 	appendUpdate(`Agent Invoked: ${agents[agentKey][0].config.id}`);
+	appendMessage(`Agent [${agents[agentKey][0].config.id}] has joined.`);
 
 	// Subscribe to agent events
 	currentAgent.on('*', (event) => {
-	  appendMessage(`Agent Message: ${JSON.stringify(event.data)}`);
+	  appendMessage(`Agent Message: ${typeof event.data === 'object' ? JSON.stringify(event.data) : event.data}`);
 	});
 
 	currentAgent.subscribe((snapshot) => {
 	  if (snapshot.status === 'done') {
-		appendUpdate(`Agent Done: ${JSON.stringify(snapshot.output)}`);
+		appendMessage(`Agent Finished: ${JSON.stringify(snapshot.output)}`);
 		console.log('Context', snapshot.context);
 	  } else {
 		appendUpdate(`Progress: ${JSON.stringify(snapshot.value)}...`);

@@ -23,20 +23,20 @@ const machine = setup({
         recipe_critic: fromPromise(async ({ input }) => {
             const completion = await openai.chat.completions.create({
                 model: "gpt-4o-mini",
-                messages: input.messages
+                messages: input.threadMessages
             })
             console.log(completion.choices[0].message)
             return completion.choices[0].message
         }),
     },
     actions: {
-        add_assistant_message: assign({ messages: ({ event, context }) => [...context.messages, event.output] }),
+        add_assistant_message: assign({ messages: ({ event, context }) => [...context.threadMessages, event.output] }),
     }
 }).createMachine({
     id: 'Critic (Recipe)',
     initial: 'critiquing_recipe',
     context: ({ input }) => ({ 
-        messages: [
+        threadMessages: [
             { role: "system", content: "You are a health food nut. Provide specific feedback on ingredients to remove that will make the provided recipe more healthy. Feedback should be a single sentence. Begin response with 'Nutritionist (Implement this feedback if possible!):'." },
             ...input.threadMessages
         ],
@@ -47,7 +47,7 @@ const machine = setup({
                 id: 'recipe_critic',
                 src: 'recipe_critic',
                 input: ({ context }) => ({
-                    messages: context.messages,
+                    threadMessages: context.threadMessages,
                 }),
                 onDone: {
                     target: 'done',

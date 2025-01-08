@@ -58,23 +58,27 @@ export const machine = setup({
 }).createMachine({
   context: ({ input }) => ({
     messages: [
-      { role: 'system', content: 'You are a state machine definition writer. Your job is to write actor logic as a finite state machine using the xstate library v5 and typescript. Output a JSON object for the state machine definition. Only output the JSON, do not make any introduction or closing statements. Do not output "```json". Only output valid JSON. Do not attach a header.' },
-      { role: 'system', content: 'Use valid Xstate v5 API. cond has been renamed to `guard` be sure to update the code.' },
-      { role: 'system', content: 'Available events: { type: "USER_MESSAGE", payload: data }.' },
-      {
-        role: 'system', content: `Available actions:
-        {
-          // Write the event to context
-          add_response: assign({ key: ({ event, input }) => event.output.content }),
-          // Use to send a message to the user
-          send_message: emit(({ input }) => ({
-            type: 'ASSISTANT_MESSAGE',
-            data: input,
-          })),
-          // Send final result to the user
-          send_done
-        }`
-      },
+      { role: 'system', content: 'You are a state machine engineer. Represent the process defined on THE PAGE as a process defined as a state machine. Use xstate library. Only output the JSON, do not make any introduction or closing statements. Do not output "```json". Only output valid JSON. Do not attach a header.' },
+      { role: 'system', content: 'Use valid Xstate v5 API.' },
+      { role: 'system', content: `Available Actors:
+        type(target, value)
+        click(target)
+      `},
+      // { role: 'system', content: 'Available events: { type: "USER_MESSAGE", payload: data }.' },
+      // {
+      //   role: 'system', content: `Available actions:
+      //   {
+      //     // Write the event to context
+      //     add_response: assign({ key: ({ event, input }) => event.output.content }),
+      //     // Use to send a message to the user
+      //     send_message: emit(({ input }) => ({
+      //       type: 'ASSISTANT_MESSAGE',
+      //       data: input,
+      //     })),
+      //     // Send final result to the user
+      //     send_done
+      //   }`
+      // },
       // {
       //   role: 'system', content: `Available actors:
       //   {
@@ -84,36 +88,36 @@ export const machine = setup({
       //     restaurant_booking_agent
       //   }`
       // },
-      {
-        role: 'system', content: `Expected JSON output:   
-{
-id: 'name',
-initial: 'initial state'
-// Initial context values that will be updated via events during the workflow.
-context: {},
-// A list of logical steps to achieve goal
-states: {
-waiting_on_input: {
-  entry: {
-    type: 'send_message',
-    params: { message: 'question to ask the user' }
-  },
-  on: {
-    SOME_EVENT: {
-      target: 'next_state',
-      actions: 'add_response'
-    }
-  }
-},
-// TRANSITION TO THIS STATE WHEN DONE. DO NOT MODIFY THIS STATE. IT MUST BE INCLUDED IN THE OUTPUT.
-done: {
-  entry: 'send_done',
-  type: 'final'
-}
-},
-}`
-      },
-      { role: 'user', content: 'I am planning a trip to Paris. Help me create an itinerary for my travel which includes things to see, food to eat, and places to sleep.' }
+//       {
+//         role: 'system', content: `Expected JSON output:   
+// {
+// id: 'name',
+// initial: 'initial state'
+// // Initial context values that will be updated via events during the workflow.
+// context: {},
+// // A list of logical steps to achieve goal
+// states: {
+// waiting_on_input: {
+//   entry: {
+//     type: 'send_message',
+//     params: { message: 'question to ask the user' }
+//   },
+//   on: {
+//     SOME_EVENT: {
+//       target: 'next_state',
+//       actions: 'add_response'
+//     }
+//   }
+// },
+// // TRANSITION TO THIS STATE WHEN DONE. DO NOT MODIFY THIS STATE. IT MUST BE INCLUDED IN THE OUTPUT.
+// done: {
+//   entry: 'send_done',
+//   type: 'final'
+// }
+// },
+// }`
+//       },
+      ...input.threadMessages
     ],
     unsafe_machine: '',
     childRef: null,

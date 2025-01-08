@@ -58,7 +58,7 @@ const machine = setup({
         }),
         emit_message: emit(({ context }) => ({
             type: 'SYSTEM_MESSAGE',
-            data: context.messages[context.messages.length - 1],
+            data: `Available inventory: ${context.messages[context.messages.length - 1]}`,
         })),
     }
 }).createMachine({
@@ -85,11 +85,11 @@ const machine = setup({
                     {
                         guard: ({ context, event }) => event.output.tool_calls != null,
                         target: 'using_tool',
-                        actions: ['add_assistant_message', 'emit_message']
+                        actions: ['add_assistant_message']
                     },
                     {
                         target: 'done',
-                        actions: ['add_assistant_message', 'emit_message']
+                        actions: ['add_assistant_message']
                     }
                 ],
             },

@@ -5,12 +5,20 @@ import routingMachine from './collaboration/collaboration.js'
 import toolApprovalMachine from './human_in_the_loop/human_in_the_loop.js'
 import codeExecutionMachine from './code_execution/code_execution.js'
 import agentGenerationMachine from './agent_generation/agent_generation.js'
+import writerChatMachine from './writer_chat/writer_chat.js'
 
 // Default agent definitions
 export default {
   writer: [
 	writerMachine,
 	{ input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }
+  ],
+  toolApproval: [
+	toolApprovalMachine,
+	{ input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }
+  ],
+  writer_chat: [
+	writerChatMachine
   ],
   critic: [
 	criticMachine,
@@ -21,10 +29,6 @@ export default {
 	{ input: { dish: "Tacos" } }
   ],
   router: [routingMachine],
-  toolApproval: [
-	toolApprovalMachine,
-	{ input: { threadMessages: [{ role: 'user', content: 'Write a recipe for tacos' }] } }
-  ],
   codeExecution: [codeExecutionMachine, { input: { threadMessages: [{ role: 'user', content: `1. Search for your profile on the Whitepages website 
 Go to whitepages.com. Type your name and city in the search box and click ‘Search.’
 

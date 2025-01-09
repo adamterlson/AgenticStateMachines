@@ -1,10 +1,10 @@
 import writerMachine from './writer/writer.js'
-import criticMachine from './critic/critic.js'
+// import criticMachine from './critic/critic.js'
 import reflectionMachine from './reflection/reflection.js'
 import routingMachine from './collaboration/collaboration.js'
 import toolApprovalMachine from './human_in_the_loop/human_in_the_loop.js'
 import codeExecutionMachine from './code_execution/code_execution.js'
-import agentGenerationMachine from './agent_generation/agent_generation.js'
+// import agentGenerationMachine from './agent_generation/agent_generation.js'
 import writerChatMachine from './writer_chat/writer_chat.js'
 
 // Default agent definitions
@@ -20,10 +20,10 @@ export default {
   writer_chat: [
 	writerChatMachine
   ],
-  critic: [
-	criticMachine,
-	{ input: { threadMessages: [{ role: 'assistant', content: "To make tacos, fill the tortillas with tomatoes, cheese, and grated carrots." }] } }
-  ],
+  // critic: [
+	// criticMachine,
+	// { input: { threadMessages: [{ role: 'assistant', content: "To make tacos, fill the tortillas with tomatoes, cheese, and grated carrots." }] } }
+  // ],
   reflection: [
 	reflectionMachine,
 	{ input: { dish: "Tacos" } }
@@ -78,8 +78,8 @@ It may take up to 24 hours for your profile to be removed from Whitepages.
 
 Whitepages verification code for opt out
 Congratulations! You have now successfully completed a whitepages.com opt-out! ` }] } }],
-  agentGenerationMachine: [
-	agentGenerationMachine,
-	{ input: { goal_info: 'You are a travel agent. Help me plan a trip to paris.' } }
-  ]
+  // agentGenerationMachine: [
+	// agentGenerationMachine,
+	// { input: { goal_info: 'You are a travel agent. Help me plan a trip to paris.' } }
+  // ]
 };

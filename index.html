@@ -44,7 +44,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
       overflow-y: auto;
     }
 
@@ -74,15 +73,13 @@
 
     .outer-container {
       background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
       padding: 15px;
       margin-bottom: 20px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       color: #fff;
-      width: 800px;
+      width: 100%;
       align-self: center;
       justify-content: center;
-      line-height: 1.5em;
     }
 
     .outer-container.done {
@@ -104,8 +101,12 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 5px;
       margin-bottom: 10px;
+      font-size: 1.5em;
+      line-height: 1.2em;
     }
-
+    .chatMessages > div {
+      margin-bottom: 0.5em;
+    }
     .input {
       display: flex;
       gap: 10px;
@@ -155,7 +156,7 @@
     }
 
     button:hover {
-      background-color: #555;
+      background-color: #124f18;
     }
 
     button.sendButton {
@@ -174,12 +175,12 @@
 
     .chatMessages,
     .stateUpdates {
-      max-height: 200px;
+      max-height: 300px;
       overflow-y: auto;
       padding: 10px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 5px;
-      min-height: 200px;
+      min-height: 300px;
     }
 
     .stateUpdates {
@@ -187,19 +188,17 @@
     }
 
     .system-container {
-      background: #333;
-      border-bottom: 5px solid #ccc;
+      background: rgba(0, 0, 0, 0.25);
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 1em;
     }
 
-    .system-container>div {
-      align-items: flex-start;
-      justify-content: flex-start;
-    }
-
-    .system-container>div {
-
-      background: rgba(0, 0, 0, 0.1);
-    }
 
     .system-container H2 {
       color: #fff;
@@ -213,21 +212,27 @@
     }
 
     .stop {
-      background-color: red;
+      background-color: rgb(178, 0, 0);
+    }
+    .stop:hover {
+      background-color: rgb(151, 0, 0);
     }
 .drawer-container {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100%;
-    width: 250px;
-    max-width: 250px;
-    transform: translateX(-250px); /* Hidden off-screen */
+    width: 300px;
+    transform: translateX(-300px); /* Hidden off-screen */
     transition: transform 0.3s ease;
     background-color: #333;
     color: #fff;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     z-index: 1000;
+}
+.drawer-container.two {
+  right: 0;
+  left: auto;
+  transform: translateX(300px); /* Hidden off-screen */
 }
 
 .drawer-container:hover,
@@ -238,17 +243,29 @@
 .drawer-handle {
     position: absolute;
     top: 20px;
-    right: -70px;
-    background-color: #555;
-    color: #888;
-    width: 50px;
-    height: 50px;
-    display: flex;
+    right: -110px;
+    padding: 0 20px;
     justify-content: center;
     align-items: center;
+    display: flex;
+}
+.drawer-handle > div {
     border-radius: 50%;
+    background-color: #1e3a5f;
+    color: #fff;
+    width: 70px;
+    height: 70px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    align-content: center;
+    text-align: center;
+}
+.two .drawer-handle {
+  right: auto;
+  left: -110px;
+}
+.two .drawer-handle > div {
+  background-color: #b23a48;
 }
 
 .drawer-content {
@@ -259,7 +276,7 @@
 
 <body>
   <div class="drawer-container">
-      <div class="drawer-handle">Shhh</div>
+      <div class="drawer-handle"><div>Blue</div></div>
       <div class="drawer-content">
         <button id="nukeButton" class="stop">Stop!</button>
         <label>
@@ -268,26 +285,29 @@
         </label>
       </div>
   </div>
-  <div class="system-container container row">
-    <div class="outer-container">
-      <h2>Agent Launcher</h2>
-      <div id="agentSelect">
-        <label for="agents">Select Agent:</label>
-        <select id="agents">
-          <option value="">-- Select an Agent --</option>
-        </select>
-
-        <label for="agentConfigInput">Configuration:</label>
-        <textarea id="agentConfigInput" placeholder="Enter agent config..."></textarea>
-        <button id="invokeAgentButton">Start Session</button>
+  <div class="drawer-container two">
+      <div class="drawer-handle"><div>Red</div></div>
+      <div class="drawer-content">
+        <div>
+          <h2>Agent Launcher</h2>
+          <div id="agentSelect">
+            <label for="agents">Select Agent:</label>
+            <select id="agents">
+              <option value="">-- Select an Agent --</option>
+            </select>
+    
+            <label for="agentConfigInput" class="hide">Configuration:</label>
+            <textarea id="agentConfigInput" class="hide" placeholder="Enter agent config..."></textarea>
+            <button id="invokeAgentButton">Launch Agent</button>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
   <div class="container" id="messages-container">
   </div>
 
   <div id="message-template" class="hide">
-    <h2 class="chatMessages-title">Red Team Session</h2>
+    <h2 class="chatMessages-title">Customer</h2>
     <div class="chatMessages">
     </div>
     <div class="input">

@@ -1,5 +1,5 @@
-# Code Execution
-![Code Execution](./code_execution.png)
+# Chartering
+![Chartering](./code_execution.png)
 [Watch Demo](https://youtu.be/JLmwVVF8Wog)
 
 Agent generates a new state machine definition and then immediately hosts that machine as a child actor. The LLM is tasked to generate the "body" of the state machine definition, which defines the flow/process. The prompt includes stubs of available actions and actors as well as types to improve output.

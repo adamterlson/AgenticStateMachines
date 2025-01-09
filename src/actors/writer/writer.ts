@@ -8,7 +8,7 @@ const openai = new OpenAI({
   // Risks to api key mitigated via vite environment variables
   dangerouslyAllowBrowser: true 
 });
-
+const DELAY = 3000
 const machine = setup({
     types: {
         input: {} as {
@@ -18,7 +18,7 @@ const machine = setup({
     },
     actors: {
         get_inventory: fromPromise(async () => {
-            console.log('GETTING INVENTORY')
+            await new Promise(resolve => setTimeout(resolve, DELAY));
             return ['Tortillas', 'Beef', 'Beans', 'Tomatoes', 'Lettuce', 'Cheese', 'Carrots', 'Pickles', 'Bricks', 'Super Fatty Yogurt']
         }),
         recipe_author: fromPromise(async ({ input }) => {
@@ -58,11 +58,11 @@ const machine = setup({
         }),
         emit_message: emit(({ context }) => ({
             type: 'SYSTEM_MESSAGE',
-            data: `Available inventory: ${context.messages[context.messages.length - 1]}`,
+            data: `Available inventory: ${JSON.stringify(context.messages[context.messages.length - 1].content)}`,
         })),
     }
 }).createMachine({
-    id: "Writer (Recipe)",
+    id: "Writer (Recipe Agent)",
     initial: 'writing',
     context: ({ input }) => ({
         messages: [

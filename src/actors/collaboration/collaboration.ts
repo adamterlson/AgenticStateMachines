@@ -162,7 +162,7 @@ const machine = setup({
     add_summary: assign({ summary: ({ event }) => event.output }),
   }
 }).createMachine({
-  id: "Collaboration (Meal Delivery)",
+  id: "Orchestration (Meal Delivery)",
   context: {
     threadMessages: [],
     recipe: '',

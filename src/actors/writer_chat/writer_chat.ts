@@ -22,6 +22,7 @@ const machine = setup({
             return ['Tortillas', 'Beef', 'Beans', 'Tomatoes', 'Lettuce', 'Cheese', 'Carrots', 'Pickles', 'Bricks', 'Super Fatty Yogurt']
         }),
         recipe_author: fromPromise(async ({ input }) => {
+            console.log(input.messages)
             const completion = await openai.chat.completions.create({
                 model: "gpt-4o-mini",
                 messages: input?.messages,
@@ -56,6 +57,15 @@ const machine = setup({
                 }]
             }
         }),
+        add_tool_deny: assign({
+            messages: ({ event, context }) => {
+                return [...context.messages, {
+                    role: "tool",
+                    content: 'Request denied.',
+                    tool_call_id: context.messages[context.messages.length - 1].tool_calls[0].id
+                }]
+            }
+        }),
         emit_client_message: emit(({ event }) => ({
             type: 'CLIENT_MESSAGE',
             data: event.output,
@@ -64,9 +74,28 @@ const machine = setup({
             type: 'SYSTEM_MESSAGE',
             data: `Available inventory: ${JSON.stringify(context.messages[context.messages.length - 1])}`,
         })),
+        remove_tool_call: assign({
+            messages: ({  context }) => [...context.messages.slice(0, -1), { role: 'system', content: 'REQUEST DENIED' }]
+        }),
+        notify_admin: emit(({ context }) => ({
+            type: 'ADMIN_MESSAGE',
+            data: 'Tool use approval required. Send `approve` or `deny`.',
+        })),
+        notify_user: emit(({ context }) => ({
+            type: 'CLIENT_MESSAGE',
+            data: 'Please wait while I get approval...',
+        })),
+        notify_user_approved:  emit(({ context }) => ({
+            type: 'CLIENT_MESSAGE',
+            data: 'Got approval to continue...',
+        })),
+    },
+    guards: {
+        is_tool_call: ({ context, event }) => event.output.tool_calls != null,
+        is_approval_message: ({ event }) => event.payload === 'approve'
     }
 }).createMachine({
-    id: "Writer (With Chat)",
+    id: "Chat (With Recipe Agent)",
     initial: 'idle',
     context: ({ input }) => ({
         messages: [
@@ -75,11 +104,6 @@ const machine = setup({
             // Backstory
         ],
     }),
-    on: {
-        USER_MESSAGE: {
-            actions: 'add_user_message'
-        }
-    },
     states: {
         idle: {
             on: {
@@ -100,7 +124,7 @@ const machine = setup({
                 onDone: [
                     {
                         guard: ({ context, event }) => event.output.tool_calls != null,
-                        target: 'using_tool',
+                        target: 'approval_required',
                         actions: ['add_assistant_message']
                     },
                     {
@@ -109,6 +133,19 @@ const machine = setup({
                     }
                 ],
             },
+        },
+        approval_required: {
+            entry: ['notify_admin', 'notify_user'],
+            on: {
+                USER_MESSAGE: [{
+                    target: 'using_tool',
+                    actions: 'notify_user_approved',
+                    guard: 'is_approval_message'
+                }, {
+                    target: 'writing',
+                    actions: ['add_tool_deny']
+                }]
+            }
         },
         using_tool: {
             invoke: {

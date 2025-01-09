@@ -78,7 +78,7 @@ const machine = setup({
         is_approval_message: ({ event }) => event.payload === 'approve'
     }
 }).createMachine({
-    id: "Human in the Loop (Recipe Agent Tool Approval)",
+    id: "Tool Approval (Recipe Agent)",
     initial: 'writing',
     context: ({ input }) => ({
         messages: [

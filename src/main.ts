@@ -28,6 +28,7 @@ function appendMessage(messagesDiv, message) {
   const messageElement = document.createElement('div');
   messageElement.textContent = message;
   messageArea.appendChild(messageElement);
+  messageArea.scrollTop = messageArea.scrollHeight;
 }
 
 function appendUpdate(message) {
@@ -86,7 +87,7 @@ function createAdminDiv(agentId) {
   newMessagesDiv.className = 'messages outer-container';
   newMessagesDiv.id = '';
 
-  newMessagesDiv.querySelector('.chatMessages-title').innerHTML = "Blue Team Session"
+  newMessagesDiv.querySelector('.chatMessages-title').innerHTML = "Admin"
 
   const messageInput = newMessagesDiv.querySelector('.messageInput');
   if (messageInput) {
@@ -173,7 +174,7 @@ invokeAgentButton.addEventListener('click', () => {
     currentAgents[agentId] = newAgent;
 
     appendMessage(newAdminDiv, `Agent Invoked: ${agentId}`);
-    appendMessage(newAdminDiv, `New session with Agent [${agentId}] has started.`);
+    appendMessage(newAdminDiv, `With Configuration: ${JSON.stringify(updatedProps)}`);
     appendMessage(newMessagesDiv, `Agent [${agentId}] has joined.`);
 
     newAgent.on('SYSTEM_MESSAGE', (event) => {

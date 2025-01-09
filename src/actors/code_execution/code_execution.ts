@@ -122,7 +122,7 @@ export const machine = setup({
     unsafe_machine: '',
     childRef: null,
   }),
-  id: "Code Execution (Trip Planning)",
+  id: "Chartering (Trip Planning)",
   initial: "generating_state_machine",
   states: {
     generating_state_machine: {

@@ -10,8 +10,18 @@ const messagesContainer = document.getElementById('messages-container');
 const adminMessagesContainer = document.getElementById('admin-messages-container');
 const updatesDiv = document.getElementsByClassName('stateUpdates')[0];
 const inspectCheckbox = document.getElementById('inspectCheckbox');
+const nukeButton = document.getElementById('nukeButton');
 
 let currentAgents = {}; // Store agents as key-value pairs
+nukeButton.addEventListener('click', () => {
+  for(const actor of Object.values(currentAgents)) {
+    actor.stop()
+  }
+  for (const div of document.querySelectorAll('.messages')) {
+    if (div.className.indexOf('done') === -1)
+      div.className += ' aborted'
+  }
+})
 
 function appendMessage(messagesDiv, message) {
   const messageArea = messagesDiv.querySelector('.chatMessages');
@@ -76,7 +86,7 @@ function createAdminDiv(agentId) {
   newMessagesDiv.className = 'messages outer-container';
   newMessagesDiv.id = '';
 
-  newMessagesDiv.querySelector('.chatMessages-title').innerHTML = "Admin Session"
+  newMessagesDiv.querySelector('.chatMessages-title').innerHTML = "Blue Team Session"
 
   const messageInput = newMessagesDiv.querySelector('.messageInput');
   if (messageInput) {
@@ -134,7 +144,7 @@ invokeAgentButton.addEventListener('click', () => {
         ? JSON.parse(agentConfigInput.value.trim())
         : {};
     } catch (error) {
-      appendUpdate('Error: Invalid JSON in the agent configuration.');
+      appendMessage(newAdminDiv, 'Error: Invalid JSON in the agent configuration.');
       return;
     }
 
@@ -157,18 +167,18 @@ invokeAgentButton.addEventListener('click', () => {
     redTeamDiv.appendChild(newMessagesDiv);
     rowDiv.appendChild(blueTeamDiv)
     rowDiv.appendChild(redTeamDiv)
-    messagesContainer?.appendChild(rowDiv)
+    messagesContainer?.prepend(rowDiv)
 
     const newAgent = createActor(agents[agentKey][0], finalOptions);
     currentAgents[agentId] = newAgent;
 
-    appendUpdate(`Agent Invoked: ${agentId}`);
+    appendMessage(newAdminDiv, `Agent Invoked: ${agentId}`);
     appendMessage(newAdminDiv, `New session with Agent [${agentId}] has started.`);
     appendMessage(newMessagesDiv, `Agent [${agentId}] has joined.`);
 
     newAgent.on('SYSTEM_MESSAGE', (event) => {
       console.log('got message for ', agentId)
-      appendUpdate(`Log message: ${typeof event.data === 'object' ? event.data.content : event.data}`);
+      appendMessage(newAdminDiv, `Log message: ${typeof event.data === 'object' ? event.data.content : event.data}`);
     });
     newAgent.on('CLIENT_MESSAGE', (event) => {
       console.log('got message for ', agentId)
@@ -176,23 +186,26 @@ invokeAgentButton.addEventListener('click', () => {
     });
     newAgent.on('ADMIN_MESSAGE', (event) => {
       console.log('got message for ', agentId)
-      appendMessage(newAdminDiv, `ADMIN Message: ${typeof event.data === 'object' ? event.data.content : event.data}`);
+      appendMessage(newAdminDiv, `From Agent: ${typeof event.data === 'object' ? event.data.content : event.data}`);
     });
 
     newAgent.subscribe((snapshot) => {
+      console.log(snapshot.status)
       if (snapshot.status === 'done') {
-        appendMessage(newMessagesDiv, `Result: ${JSON.stringify(snapshot.output)}`);
-        appendMessage(newMessagesDiv, `Agent Finished with result: ${JSON.stringify(snapshot.output)}`);
+        newAdminDiv.className += ' done'
+        newMessagesDiv.className += ' done'
+        appendMessage(newAdminDiv, `Output: ${JSON.stringify(snapshot.output)}`);
+        appendMessage(newMessagesDiv, typeof snapshot.output === 'object' ? snapshot.output.content : snapshot.output);
         console.log('Context', snapshot.context);
       } else {
-        appendUpdate(`Progress: ${JSON.stringify(snapshot.value)}...`);
+        appendMessage(newAdminDiv, `Progress: ${JSON.stringify(snapshot.value)}...`);
       }
     });
 
     newAgent.start();
   } else {
-    appendUpdate('No agent selected.');
+    // appendMessage(newAdminDiv, 'No agent selected.');
   }
 });
 
-appendUpdate('Log instance ready.');
+// appendMessage(newAdminDiv, 'Log instance ready.');

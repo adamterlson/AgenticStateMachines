@@ -19,7 +19,8 @@ This repository aims to demonstrate common agentic patterns implemented with FSM
 2. [**Reflection**](./src/actors/reflection/reflection.md): Iterating over prior states and context to improve decisions and outputs.
 3. [**Collaboration (Routing)**](./src/actors/collaboration/collaboration.md): Defining sequence to reach desired outcome based on predefined rules or dynamic context.
 4. [**Human-in-the-Loop**]('./src/actors/human_in_the_loop/human_in_the_loop.md): Defining explicit manual interactions in workflows.
-5. [**Chartering/Agent Creation**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the mission and hosting it with injected/parent-defined implementation and behavior.
+5. [**Orchestration**](./src/actors/collaboration/collaboration.md): Central orchestrator directs next state transition.
+6. [**Chartering/Agent Creation**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the mission and hosting it with injected/parent-defined implementation and behavior.
 
 ## What is an AI Agent?
 

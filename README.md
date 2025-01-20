@@ -23,14 +23,7 @@ This repository aims to demonstrate common agentic patterns implemented with FSM
 
 ## What is an AI Agent?
 
-An **AI agent** extends the concept of a simple LLM response by incorporating decision-making and context-awareness over time. While traditional generative AI systems respond to a single prompt and produce an immediate result, AI agents operate as part of a **workflow process**, taking actions based on prior context and results. 
-
-As Stephen Kaufman writes in [Beyond ChatGPT: The rise of agentic AI and its implications for security](https://www.csoonline.com/article/3574697/beyond-chatgpt-the-rise-of-agentic-ai-and-its-implications-for-security.html): 
-> "Traditional genAI services accept a specific command or prompt and return a response. Agents work as part of a workflow process that acts based on the results returned from the agent."  
-
-He further elaborates that agentic AI systems are characterized by their autonomy and continuous operation:
-
-> "They can make decisions and act without the need for human intervention or a human in the loop. They are always online, listening, reacting and analyzing domain-specific data in real time, making decisions and acting on them."  
+For the purposes of this project, an "Agent" is an Actor, an LLM, and a State Machine. For more details see [https://www.youtube.com/watch?v=oNG70nUcriI](https://www.youtube.com/watch?v=oNG70nUcriI).
 
 ## The Perfect Pair: LLMs and State Machines for Smarter, More Reliable AI Agents
 

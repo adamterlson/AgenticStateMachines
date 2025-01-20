@@ -87,7 +87,7 @@ function createAdminDiv(agentId) {
   newMessagesDiv.className = 'messages outer-container';
   newMessagesDiv.id = '';
 
-  newMessagesDiv.querySelector('.chatMessages-title').innerHTML = "Admin"
+  newMessagesDiv.querySelector('.chatMessages-title').innerHTML = "Operator"
 
   const messageInput = newMessagesDiv.querySelector('.messageInput');
   if (messageInput) {

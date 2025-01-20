@@ -48,7 +48,7 @@ export const machine = setup({
   actors: {
     create_state_machine: fromPromise(async ({ input }) => {
       const completion = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-o1",
         messages: input.messages
       })
       console.log(completion.choices[0].message.content)
@@ -122,17 +122,17 @@ export const machine = setup({
     unsafe_machine: '',
     childRef: null,
   }),
-  id: "Chartering (Trip Planning)",
-  initial: "generating_state_machine",
+  id: "Chartering",
+  initial: "generating_new_machine",
   states: {
-    generating_state_machine: {
+    generating_new_machine: {
       invoke: {
         id: "create_state_machine",
         input: ({ context }) => ({
           messages: context.messages
         }),
         onDone: {
-          target: "hosting",
+          target: "running_machine",
           actions: [
             {
               type: "add_unsafe_machine",
@@ -142,7 +142,7 @@ export const machine = setup({
         src: "create_state_machine",
       },
     },
-    hosting: {
+    running_machine: {
       entry: assign({
         childRef: ({ context, self }) => {
           console.log('MACHINE DEF', context.unsafe_machine)
@@ -178,21 +178,6 @@ export const machine = setup({
           return actor
         },
       }),
-      on: {
-        ASSISTANT_MESSAGE: {
-          actions: emit(({ event }) => event),
-        },
-        USER_MESSAGE: {
-          actions: ['forward_event']
-        },
-        DONE: {
-          target: 'done',
-          actions: 'add_output',
-        }
-      }
-    },
-    done: {
-      type: "final",
     },
   },
   output: ({ context }) => ({ role: 'assistant', content: 'Final output from child:' + JSON.stringify(context.child_output) })

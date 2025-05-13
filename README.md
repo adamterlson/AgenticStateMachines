@@ -16,7 +16,7 @@ npm run dev # Start Vite server
 This repository aims to demonstrate common agentic patterns implemented with FSMs:
 
 1. [**Writer w/ Tool Use**](./actors/writer/writer.md): Managing tools with clearly defined activation, execution, and error states.
-2. [**Reflection**](./src/actors/reflection/reflection.md): Iterating over prior states and context to improve decisions and outputs.
+2. [**Reflection**](./src/actors/reflection/reflection.md): Passing messages between two agents with feedback on how to refine and improve output.
 3. [**Collaboration**](./src/actors/collaboration/collaboration.md): Defined sequence of steps between specialist agents to reach outcome.
 4. [**Human-in-the-Loop**]('./src/actors/human_in_the_loop/human_in_the_loop.md): Defining explicit manual interactions in workflows.
 5. [**Orchestration/Routing**](./src/actors/collaboration/collaboration.md): Central orchestrator directs next step in the flow.

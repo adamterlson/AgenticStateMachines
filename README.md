@@ -3,14 +3,6 @@
 
 Harnessing the timeless **Finite State Machine (FSM)** and **Actor Model** alongside **Large Language Models (LLMs)** provides a structured and reliable approach to developing agentic cognitive architectures. Patterns such as tool use, reflection, planning, supervision, and human-in-the-loop interaction can be implemented effectively using FSMs. Together, FSMs and LLMs enable the creation of applications that are understandable, scalable, observable, modular, and resilient.
 
-## Getting Started
-
-```
-echo "VITE_OPENAI_API_KEY=your openai api key here" >> .env.local
-npm install
-npm run dev # Start Vite server
-```
-
 ## Examples of Agentic AI Patterns Using FSMs
 
 This repository aims to demonstrate common agentic patterns implemented with FSMs:
@@ -19,8 +11,8 @@ This repository aims to demonstrate common agentic patterns implemented with FSM
 2. [**Reflection**](./src/actors/reflection/reflection.md): Passing messages between two agents with feedback on how to refine and improve output.
 3. [**Collaboration**](./src/actors/collaboration/collaboration.md): Defined sequence of steps between specialist agents to reach outcome.
 4. [**Human-in-the-Loop**]('./src/actors/human_in_the_loop/human_in_the_loop.md): Defining explicit manual interactions in workflows.
-5. [**Orchestration/Routing**](./src/actors/collaboration/collaboration.md): Central orchestrator directs next step in the flow.
-6. [**Chartering/Agent Creation**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the mission and hosting it with injected/parent-defined implementation and behavior.
+5. [**Orchestration/Routing**](./src/actors/collaboration/collaboration.md): Central orchestrator / traffic cop directs the next step in the flow.
+6. [**Chartering/Agent Creation**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the agent goal/mission. This is the future foundation for MCP client-server interaction.
 
 ## What is an AI Agent?
 
@@ -47,7 +39,7 @@ While libraries and frameworks like LangChain, LangGraph, AutoGen, and CrewAI ca
 - **Complexity Overhead**—Frameworks often introduce layers of complexity, requiring additional code to fit specific use cases or integrate with other parts of the system.
 - **Limited Flexibility**—Customization can be challenging, as frameworks often prioritize general-purpose solutions over niche requirements.
 
-By leveraging **finite state machines**—a "bread and butter" tool in software engineering—developers can avoid the pitfalls of heavy frameworks and instead:
+By leveraging **finite state machines**—a "bread and butter" tool in software engineering—developers can:
 
 - **Empower AI Generation**: State machines are simple and ubiquitous, supporting LLMs to understand, generate, and refine, enabling rapid development and self-improving architectures.
 - **Build with Consistency**: Use the same patterns and techniques across agentic and non-agentic components of the system.
@@ -56,6 +48,13 @@ By leveraging **finite state machines**—a "bread and butter" tool in software 
 - **Language Agnostic**: Finite State Machines can be built in every language—having an understanding of Agentic patterns using FSMs will enable Agentic systems in any system, regardless of language
 
 In short, FSMs provide a flexible, extensible, and robust foundation for developing agentic AI systems that scale with confidence.
+
+# Want to build agents like this? Check out Temporal!
+Temporal is a wonderful tool to host and apply these process patterns at scale:
+- Handles non-differentiated system architecture 
+- Visibility and operational control
+- Polyglot
+- Open Source
 
 ## Contributing
 

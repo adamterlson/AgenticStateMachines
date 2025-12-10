@@ -12,7 +12,7 @@ This repository aims to demonstrate common agentic patterns implemented with FSM
 3. [**Collaboration**](./src/actors/collaboration/collaboration.md): Defined sequence of steps between specialist agents to reach outcome.
 4. [**Human-in-the-Loop**]('./src/actors/human_in_the_loop/human_in_the_loop.md): Defining explicit manual interactions in workflows.
 5. [**Orchestration/Routing**](./src/actors/collaboration/collaboration.md): Central orchestrator / traffic cop directs the next step in the flow.
-6. [**Chartering/Agent Creation**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the agent goal/mission. This is the future foundation for MCP client-server interaction.
+6. [**Chartering**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the agent goal/mission and executing. This is the future foundation for MCP client-server interaction.
 
 ## What is an AI Agent?
 

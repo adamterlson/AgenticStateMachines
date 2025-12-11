@@ -14,6 +14,18 @@ This repository aims to demonstrate common agentic patterns implemented with FSM
 5. [**Orchestration/Routing**](./src/actors/collaboration/collaboration.md): Central orchestrator / traffic cop directs the next step in the flow.
 6. [**Chartering**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the agent goal/mission and executing. This is the future foundation for MCP client-server interaction.
 
+# Want to build agents like this? [Check out Temporal](https://temporal.io)!
+Temporal is a wonderful tool to host and apply these process patterns at scale. It handles all the undifferentiated, friction-filled overhead of building an event-sourcing and message-passing system and allows the developer to focus on writing the core business logic/operations as code. It's perfect for building AI agents!
+
+- Handles non-differentiated system architecture 
+- Durable workflows that are "guaranteed" to run to completion
+- Visibility and operational control
+- CRON/scheduling
+- Polyglot SDKs
+- Supports insane scale
+- Open Source, self-hosted option for free
+- ...tons more!
+
 ## What is an AI Agent?
 
 For the purposes of this project, an "Agent" is an Actor, an LLM, and a State Machine. For more details see [https://www.youtube.com/watch?v=oNG70nUcriI](https://www.youtube.com/watch?v=oNG70nUcriI).
@@ -48,13 +60,6 @@ By leveraging **finite state machines**—a "bread and butter" tool in software 
 - **Language Agnostic**: Finite State Machines can be built in every language—having an understanding of Agentic patterns using FSMs will enable Agentic systems in any system, regardless of language
 
 In short, FSMs provide a flexible, extensible, and robust foundation for developing agentic AI systems that scale with confidence.
-
-# Want to build agents like this? Check out Temporal!
-Temporal is a wonderful tool to host and apply these process patterns at scale:
-- Handles non-differentiated system architecture 
-- Visibility and operational control
-- Polyglot
-- Open Source
 
 ## Contributing
 

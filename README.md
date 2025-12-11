@@ -10,7 +10,7 @@ This repository aims to demonstrate common agentic patterns implemented with FSM
 1. [**Writer w/ Tool Use**](./src/actors/writer/writer.md): Managing tools with clearly defined activation, execution, and error states.
 2. [**Reflection**](./src/actors/reflection/reflection.md): Passing messages between two agents with feedback on how to refine and improve output.
 3. [**Collaboration**](./src/actors/collaboration/collaboration.md): Defined sequence of steps between specialist agents to reach outcome.
-4. [**Human-in-the-Loop**](.src/actors/human_in_the_loop/huamn_in_the_loop.md): Defining explicit manual interactions in workflows.
+4. [**Human-in-the-Loop**](./src/actors/human_in_the_loop/huamn_in_the_loop.md): Defining explicit manual interactions in workflows.
 5. [**Orchestration/Routing**](./src/actors/collaboration/collaboration.md): Central orchestrator / traffic cop directs the next step in the flow.
 6. [**Chartering**](./src/actors/code_execution/code_execution.md): Generating a novel process to accomplish the agent goal/mission and executing. This is the future foundation for MCP client-server interaction.
 
